@@ -33,7 +33,7 @@ public class UserService {
 
     /** 유저 삭제 */
     public void deleteUser(Long id){
-        userRepository.deleteUserById(id);
+        userRepository.deleteById(id);
     }
 
 }

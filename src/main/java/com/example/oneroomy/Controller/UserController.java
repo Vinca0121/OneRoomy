@@ -113,6 +113,7 @@ public class UserController {
     public String deleteAccount(@RequestParam Long id, String description){
         userService.deleteUser(id);
         return "redirect:/";
+//        return "login";
     }
 
 
