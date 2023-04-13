@@ -22,7 +22,7 @@ public class User {
     private String username;
     private String phonenumber;
     private String password;
-    private String location;
+    private String locations;
     private String university;
 
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editinfo.css}"/>
+    <title>회원정보수정 페이지</title>
+</head>
+<body style="background-image: url('background/street.png'); background-size: cover; background-repeat: no-repeat;">
+<!-- <form action="/signup" method="post" > -->
+<h1 class="welcome">Welcome to OneRoomy!</h1>
+<div class="container" id="container">
+
+    <div class="form-container sign-up-container">
+        <form action="/deleteAccount" method="GET">
+            <h1>회원 탈퇴</h1>
+            <div class="social-container">
+            </div>
+            <input type="hidden" name="id" th:value="${user.id}"/>
+            <input type="text" placeholder="탈퇴 사유 입력" name="description"/>
+            <span>회원 탈퇴시 회원가입 시 입력했던 모든 데이터가 즉시 삭제되며 해당 데이터는 복구할 수 없습니다. 진행하시겠습니까?</span>
+            <div class="withdrawal">
+                <span style="color:red">예. 회원탈퇴를 진행하겠습니다.<input type="checkbox" id="deleteDataCheckbox"></span>
+            </div>
+            <button type="submit">회원 탈퇴</button>
+        </form>
+    </div>
+
+    <div class="form-container sign-in-container">
+        <form action="/editAccount" method="POST">
+            <h1>회원 정보 수정</h1>
+            <input type="text" placeholder="성명" th:value="${user.username}" name="username" readonly style="background-color: rgba(116, 187, 253, 0.63);"/>
+            <input type="text" placeholder="휴대전화 번호" th:value="${user.phonenumber}" name="phonenumber" readonly style="background-color: rgba(116, 187, 253, 0.63);"/>
+            <span>성명 및 휴대전화 번호는 수정이 불가능합니다.</span>
+            <input type="password" placeholder="비밀번호" th:value="${user.password}" name="password" />
+            <input type="text" placeholder="거주지" th:value="${user.locations}" name="locations"/>
+            <input type="text" placeholder="대학명" th:value="${user.university}" name="university"/>
+            <a href="#">입력한 사항이 맞나요?</a>
+            <button type="submit">수정하기</button>
+            <button type="button" onClick="location.href='/home'" style="background-color: gray;">취소하기</button>
+        </form>
+    </div>
+
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>돌아가기</h1>
+                <p>앗 마음이 바뀌셨다니 다행이에요!</p>
+                <button class="ghost" id="signIn">회원정보 수정으로</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>회원 탈퇴하기</h1>
+                <p>더이상 서비스를 이용을 원치 않으시나요?</p>
+                <button class="ghost" id="signUp">회원 탈퇴 진행</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </form> -->
+<script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+</script>
+</body>
+</html>
