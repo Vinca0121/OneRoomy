@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <script>
+        $( document ).ready( function() {
+            $( '.slider' ).slick( {
+                autoplay: true,
+                autoplaySpeed: 1000,
+                slidesToShow: 5,
+                slidesToScroll: 1,
+            } );
+        } );
+
+
+    </script>
+
+
+    <!-- slider css -->
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+            width : 280px;
+            height : 330px;
+        }
+        .slider {
+            width: 1200px;
+            margin: 0px auto;
+            z-index: 1;
+            display: block;
+            background-color: whitesmoke;
+        }
+        .slider .slick-slide {
+            margin: 10px;
+        }
+        .slick-prev:before, .slick-next:before {
+            color: #444444;
+        }
+    </style>
+
+    <!-- end -->
+</head>
+
+
+<body>
+<header>
+    <nav>
+        <ul id="headnav">
+            <li><a href>HOME</a></li>
+            <li><a href>로그인</a></li>
+            <li><a href>회원가입</a></li>
+            <li><a href>고객센터</a></li>
+            <li><a href>제휴문의</a></li>
+            <li><a href>회사소개</a></li>
+        </ul>
+    </nav>
+    <div class="mainpage">
+        <h1><a th:href="@{/}">OK24 Comics</a></h1>
+    </div>
+
+</header>
+<!-- z -->
+<div id="menu">
+    <ul class="main1">
+        <li><a href="/">HOME</a></li>
+        <li><a href="/ko">국내 만화</a>
+            <ul class="main2">
+                <li><a href="/ko/love">순정만화</a></li>
+                <li><a href="/ko/boy">소년만화</a></li>
+                <li><a href="/ko/adult">성인만화</a></li>
+                <li><a href="/ko/plan">기획도서</a></li>
+                <li><a href="/ko/cartoon">만화잡지</a></li>
+            </ul>
+        </li>
+
+
+        <li><a href="/jp">일본 만화</a>
+            <ul class="main2">
+                <li><a href="/jp/love">순정만화</a></li>
+                <li><a href="/jp/boy">소년만화</a></li>
+                <li><a href="/jp/adult">성인만화</a></li>
+                <li><a href="/jp/plan">기획도서</a></li>
+            </ul>
+        </li>
+
+
+        <li><a href="/us">미국 만화</a>
+            <ul class="main2">
+                <li><a href="/us/dc">DC 코믹스마블</a></li>
+                <li><a href="/us/comics">코믹스리터러리</a></li>
+                <li><a href="/us/graphic">그래픽노블</a></li>
+            </ul>
+        </li>
+
+
+    </ul>
+</div>
+<!-- 추천도서 슬라이더 -->
+
+<div >
+    <div id="recommanded1">▶추천 도서</div>
+    <div class="slider">
+        <div><img src="webtoon/1.jpg" alt=""></div>
+        <div><img src="webtoon/2.jpg" alt=""></div>
+        <div><img src="webtoon/3.jpg" alt=""></div>
+        <div><img src="webtoon/4.jpg" alt=""></div>
+        <div><img src="webtoon/5.jpg" alt=""></div>
+        <div><img src="webtoon/6.jpg" alt=""></div>
+        <div><img src="webtoon/7.jpg" alt=""></div>
+        <div><img src="webtoon/8.jpg" alt=""></div>
+        <div><img src="webtoon/9.jpg" alt=""></div>
+        <div><img src="webtoon/10.jpg" alt=""></div>
+        <div><img src="webtoon/11.jpg" alt=""></div>
+        <div><img src="webtoon/12.jpg" alt=""></div>
+        <div><img src="webtoon/13.jpg" alt=""></div>
+        <div><img src="webtoon/14.jpg" alt=""></div>
+        <div><img src="webtoon/15.jpg" alt=""></div>
+        <div><img src="webtoon/16.jpg" alt=""></div>
+        <div><img src="webtoon/17.jpg" alt=""></div>
+        <div><img src="webtoon/18.jpg" alt=""></div>
+        <div><img src="webtoon/19.jpg" alt=""></div>
+        <div><img src="webtoon/20.jpg" alt=""></div>
+    </div>
+</div>
+
+<div class="searchbar">
+    <form action="https://search.naver.com/search.naver" method="GET">
+        <p>
+            검색 방법:
+            <select class="myselect" name="select">
+                <option>title</option>
+                <option>category</option>
+                <option>price</option>
+            </select>
+            <input class="searchtext" name="text" type="text" placeholder="검색어를 입력해주세요.">
+            <input class="searchbtn" type="submit" value="검색">
+            <button class="createbtn" type="button" onClick="location.href='books/new'">생성</button>
+        </p>
+    </form>
+</div>
+<p></p>
+
+<hr class="myhrline">
+<!-- 테이블 선언 실시 -->
+
+<table class="rwd-table">
+    <div id="recommanded1">▶HOME</div>
+    <hr class="myhr">
+    <tbody>
+    <tr>
+        <th>제목</th>
+        <th>카테고리</th>
+        <th>가격</th>
+    </tr>
+    <!-- tr th:each : 행 반복문을 수행하겠다는 의미입니다 [여러 데이터 출력] -->
+    <tr th:each="book : ${bookList}">
+        <td data-th="제목"><a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}"></a></td>
+        <td data-th="카테고리"><span th:text="${book.category}"></span></td>
+        <td data-th="가격"><span th:text="|${book.price}원|"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<hr class="myhr">
+<footer>
+    <nav>
+        <ul id="footernav">
+            <li><a href>회사소개</a></li>
+            <li><a href>인재채용</a></li>
+            <li><a href>제휴문의</a></li>
+            <li><a href>고객센터</a></li>
+            <li><a href>개인정보취급방침</a></li>
+            <li><a href>이용약관</a></li>
+        </ul>
+    </nav>
+    <p id="copyright">Copyright ⓒ 2023 by 김준용 All rights reserved.</p>
+</footer>
+</body>
+
+
+</html>
+
+
+

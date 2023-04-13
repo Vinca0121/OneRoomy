@@ -1,0 +1,335 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+#headnav{
+    color: gray;
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    float: right;
+}
+
+#headnav > li{
+    display: inline;
+    margin: 0 20px 0 0 ;
+}
+
+#headnav a{
+    text-decoration: none;/* 링크의 밑줄 제거 */
+    color: inherit; /* 링크의 색상 제거 */
+}
+body{
+    color: black;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    font-family: 'Hack';
+}
+header{
+    color:  rebeccapurple;
+    background-color: white;
+    padding: 20px;
+    font-weight: bolder;
+    font-family: 'Abril Fatface';
+    padding-left: 65px;
+
+}
+section {
+    background-color: pink;
+    padding: 20px;
+    color: black;
+    display: flex;
+    flex-direction: row-reverse;
+}
+footer{
+    background-color: white;
+    padding: 20px;
+}
+
+section > div {
+    background-color: blueviolet;
+    margin: auto;
+    width: 150px;
+    height: 70px;
+    padding: 10px;
+}
+
+
+#search{
+    border-style: dotted ;
+    border-width: 2px;
+    padding: 5px;
+    margin: 0;
+    display: flex;
+    flex-direction: row-reverse;
+}
+#canvas_section{
+    display: block;
+}
+
+#canvas {
+    margin: 10px;
+    padding: 10px;
+    background: cornsilk;
+    border: thin inset #aaaaaa;
+}
+
+
+/* 드롭다운 */
+/*가로메뉴형*/
+
+#menu {
+    height: 50px;
+    background: white;
+    border-bottom:3px solid blueviolet;
+    font-family: 'Jua';
+    font-size: 25px;
+}
+
+.main1 a{
+    text-decoration: none;/* 링크의 밑줄 제거 */
+    color: inherit; /* 링크의 색상 제거 */
+}
+.mainpage a{
+    text-decoration: none;/* 링크의 밑줄 제거 */
+    color: inherit; /* 링크의 색상 제거 */
+}
+#menu ul{
+    list-style: none;
+    float: left;
+
+}
+.main1 {
+    width: 500px;
+    height: 100%;
+    margin: 0 auto;
+    color: black;
+    font-weight: bolder;
+}
+
+
+
+.main1>li {
+    float: left;
+    width: 25%;
+    line-height: 50px;
+    text-align: center;
+    position: relative;
+}
+
+
+
+.main1>li:hover .main2 {
+    left: 0;
+}
+
+
+.main1>li a {
+    display: block;
+    width: 100%;
+}
+
+.main1>li a:hover {
+    background: slateblue;
+    color: #fff;
+
+}
+
+.main2 {
+    position: absolute;
+    top: 50px;
+    left: -9999px;
+    background: rgba(200, 204, 247, 0.726);
+    width: 120%;
+    border:5px solid slateblue;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 2;
+}
+.main2>li {
+    position: relative;
+    text-align: center;
+}
+
+/* 추천도서 쪽 */
+
+#recommanded1{
+    margin: 15px 25px 0px 0px;
+    font-family: 'Jua';
+    font-size: 20px;
+    padding-left: 72px;
+    font-weight: bold;
+}
+
+
+.searchbar{
+    padding: 20px;
+float: right;
+
+}
+
+.searchbar p{
+    font-size: 25px;
+    width: auto;
+    font-family: 'Jua';
+    align-content: center;
+    margin: 2px;
+}
+
+
+.myselect{
+        font-size: 25px;
+        width: auto;
+        font-family: 'Jua';
+        align-content: center;
+        margin: 2px;
+}
+
+.searchbtn, .createbtn, .searchtext{
+    border:3px solid slateblue;
+    border-radius: 5px;
+    background-color: snow;
+    font-size: 25px;
+    width: auto;
+    font-family: 'Jua';
+    align-content: center;
+
+    margin: 2px;
+}
+
+/* footer */
+#footernav{
+    color: black;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    font-family: 'Jua';
+    text-align: center;
+    font-weight: bold;
+
+}
+
+#footernav > li{
+    display: inline;
+    margin: 10px;
+    padding: 10px;
+}
+
+#footernav a{
+    text-decoration: none;/* 링크의 밑줄 제거 */
+    color: inherit; /* 링크의 색상 제거 */
+}
+
+#copyright{
+    border-top:3px solid gray;
+    text-align: center;
+    font-weight: bolder;
+    margin: 20px;
+    padding: 10px;
+}
+
+hr.myhr{
+    border: thin solid blueviolet;
+}
+hr.myhrline{
+    border: thin solid white;
+    height : 35px;
+}
+
+/* 테이블 css를 적용하는 부분입니다 */
+.rwd-table {
+  margin: auto;
+  min-width: 500px;
+  width: 1200px;
+  border-collapse: collapse;
+  font-family: 'Jua';
+  padding : 10px;
+}
+
+.rwd-table tr:first-child {
+  background: rgb(99, 163, 2);
+  color: #fff;
+}
+
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #f5f9fc;
+}
+
+.rwd-table tr:nth-child(odd):not(:first-child) {
+  background-color: #ebf3f9;
+}
+
+.rwd-table th {
+  display: none;
+}
+
+.rwd-table td {
+  display: block;
+}
+
+
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 120px;
+  display: inline-block;
+  color: #000;
+}
+
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+
+.rwd-table {
+  color: #333;
+  border-radius: .4em;
+  overflow: hidden;
+}
+
+.rwd-table tr {
+  border-color: #bfbfbf;
+}
+
+.rwd-table th,
+.rwd-table td {
+  padding: .5em 1em;
+}
+@media screen and (max-width: 601px) {
+  .rwd-table tr:nth-child(2) {
+    border-top: none;
+  }
+}
+@media screen and (min-width: 600px) {
+  .rwd-table tr:hover:not(:first-child) {
+    background-color: #d8e7f3;
+  }
+  .rwd-table td:before {
+    display: none;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    padding: .25em .5em;
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    padding: 0.5em !important;
+  }
+}
+
+
