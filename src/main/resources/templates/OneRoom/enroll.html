@@ -24,7 +24,7 @@
   </div>
 <script>
   var login_id = localStorage.getItem('login_userId');
-  // JavaScript를 사용하여 form의 action 속성 값 변경
+  // form 객체를 찾아서 해당 action 값을 id를 전달하여 재설정
   var form = document.getElementById('myForm');
   form.action = '/OneRoom/enroll?login_id=' + login_id;
 

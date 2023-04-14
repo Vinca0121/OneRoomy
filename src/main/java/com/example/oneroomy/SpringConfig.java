@@ -1,7 +1,9 @@
 package com.example.oneroomy;
 
+import com.example.oneroomy.Repository.ContractRepository;
 import com.example.oneroomy.Repository.OneRoomRepository;
 import com.example.oneroomy.Repository.UserRepository;
+import com.example.oneroomy.Service.ContractService;
 import com.example.oneroomy.Service.OneRoomService;
 import com.example.oneroomy.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,14 @@ public class SpringConfig {
     /** OneRoom */
     private final OneRoomRepository oneRoomRepository;
 
+    /** Contract */
+    private final ContractRepository contractRepository;
+
     @Autowired
-    public SpringConfig(UserRepository userrepository, OneRoomRepository oneRoomRepository) {
+    public SpringConfig(UserRepository userrepository, OneRoomRepository oneRoomRepository, ContractRepository contractRepository) {
         this.userrepository = userrepository;
         this.oneRoomRepository = oneRoomRepository;
+        this.contractRepository = contractRepository;
     }
 
     @Bean
@@ -33,4 +39,8 @@ public class SpringConfig {
         return new OneRoomService(oneRoomRepository);
     }
 
+    @Bean
+    public ContractService contractService() {
+        return new ContractService(contractRepository);
+    }
 }
