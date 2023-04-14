@@ -14,7 +14,7 @@
             <h1>회원 탈퇴</h1>
             <div class="social-container">
             </div>
-            <input type="hidden" name="id" th:value="${user.id}"/>
+            <input id="login_user" type="hidden" name="id" th:value="${user.id}"/>
             <input type="text" placeholder="탈퇴 사유 입력" name="description"/>
             <span>회원 탈퇴시 회원가입 시 입력했던 모든 데이터가 즉시 삭제되며 해당 데이터는 복구할 수 없습니다. 진행하시겠습니까?</span>
             <div class="withdrawal">
@@ -35,7 +35,8 @@
             <input type="text" placeholder="대학명" th:value="${user.university}" name="university"/>
             <a href="#">입력한 사항이 맞나요?</a>
             <button type="submit">수정하기</button>
-            <button type="button" onClick="location.href='/home'" style="background-color: gray;">취소하기</button>
+            <button type="button" onClick="location.href='/home?id=' + document.getElementById('login_user').value" style="background-color: gray;">취소하기</button>
+<!--            <a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
         </form>
     </div>
 

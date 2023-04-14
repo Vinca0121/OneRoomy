@@ -10,6 +10,7 @@
 <!--    현재 로그인 시, userid를 메인 페이지에 전달해서 뿌려주고 있음-->
     <input id="login_user" type="hidden" name="id" th:value="${user.id}">
     <button type="submit">회원정보수정</button>
+    <button type="button" onClick="location.href='/enroll'" style="background-color: gray;">원룸 등록하기</button>
 </form>
 
 
@@ -18,6 +19,9 @@
     /** 세션 데이터 불러와서 여기서 login_user의 value값으로 넣어줘야함 */
     /** 굳이..세션 데이터에 안넣어줘도 지금은 되긴할듯? 메인페이지에 현재 id 값 넘겼음 */
 
+    /**  홈화면에 접속 시, 현재 접속한 유저의 ID 값 Update */
+    const login_userID = document.getElementById('login_user').value;
+    localStorage.setItem('login_userId', login_userID);
 
     /*<![CDATA[*/
     // 옵션 생성기
