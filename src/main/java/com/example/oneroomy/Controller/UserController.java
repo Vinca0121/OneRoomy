@@ -70,7 +70,7 @@ public class UserController {
             return "home";
         }
         else{
-            return "signin";
+            return "redirect:/";
         }
     }
 
@@ -109,7 +109,12 @@ public class UserController {
     public String deleteAccount(@RequestParam Long id, String description){
         userService.deleteUser(id);
         return "redirect:/";
-//        return "login";
+    }
+
+    /** 로그아웃 */
+    @GetMapping("/logout")
+    public String logout(){
+        return "redirect:/";
     }
 
 
