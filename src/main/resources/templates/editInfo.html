@@ -12,8 +12,6 @@
     <div class="form-container sign-up-container">
         <form action="/deleteAccount" method="GET">
             <h1>회원 탈퇴</h1>
-            <div class="social-container">
-            </div>
             <input id="login_user" type="hidden" name="id" th:value="${user.id}"/>
             <input type="text" placeholder="탈퇴 사유 입력" name="description"/>
             <span>회원 탈퇴시 회원가입 시 입력했던 모든 데이터가 즉시 삭제되며 해당 데이터는 복구할 수 없습니다. 진행하시겠습니까?</span>

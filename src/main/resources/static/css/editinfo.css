@@ -16,10 +16,12 @@
 
 @keyframes scaleAnimation {
     from {
-        transform: scale(1.0);
+        transform: scale(1);
+        color: #fdfdfd;
     }
     to {
         transform: scale(1.1);
+        color: rgb(6, 127, 240); /* 원하는 무지개 색상으로 변경 */
     }
 }
 

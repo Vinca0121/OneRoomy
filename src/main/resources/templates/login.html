@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
     <title>로그인/회원가입 페이지</title>
 </head>
-<body style="background-image: url('background/street.png'); background-size: cover; background-repeat: no-repeat;">
+<body style="background-image: url('/background/street.png'); background-size: cover; background-repeat: no-repeat;">
 <!-- <form action="/signup" method="post" > -->
 <h1 class="welcome">Welcome to OneRoomy!</h1>
 <div class="container" id="container">
@@ -12,8 +12,6 @@
     <div class="form-container sign-up-container">
         <form action="/signup" method="post">
             <h1>회원 가입</h1>
-            <div class="social-container">
-            </div>
             <span>성명 및 휴대전화 번호는 수정이 불가능합니다.</span>
             <input type="text" placeholder="성명" name="username"/>
             <input type="text" placeholder="휴대전화 번호" name="phonenumber"/>
