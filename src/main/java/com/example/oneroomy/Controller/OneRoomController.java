@@ -2,7 +2,6 @@ package com.example.oneroomy.Controller;
 
 
 import com.example.oneroomy.DTO.OneRoomDTO;
-import com.example.oneroomy.DTO.UserDTO;
 import com.example.oneroomy.Domain.Contract;
 import com.example.oneroomy.Domain.OneRoom;
 import com.example.oneroomy.Domain.User;
@@ -11,6 +10,7 @@ import com.example.oneroomy.Service.OneRoomService;
 import com.example.oneroomy.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,7 +76,14 @@ public class OneRoomController {
         /*이후, 계약 데이터베이스 생성 */
         contractService.createContract(contract);
 
-        return "login";
+        return "redirect:/home?id=" + login_id;
+    }
+
+    @GetMapping("/information")
+    public String goInfoPage(@RequestParam("id") Long id, Model model){
+        OneRoom oneRoom = oneRoomService.findOneRoomByID(id);
+        model.addAttribute("oneRoom",oneRoom);
+        return "OneRoom/information";
     }
 
 }

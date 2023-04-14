@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/information.css}"/>
+  <title>원룸 정보 디테일 페이지</title>
+</head>
+<body style="background-image: url('/background/street.png'); background-size: cover; background-repeat: no-repeat;">
+<!-- <form action="/signup" method="post" > -->
+<h1>원룸 정보</h1>
+원룸 명 : <span th:text="${oneRoom.roomName}"></span>
+보증금 : <span th:text="${oneRoom.roomDeposit}"></span>
+월세 : <span th:text="${oneRoom.roomMonthly}"></span>
+위치 : <span th:text="${oneRoom.roomLocations}"></span>
+임대기간 : <span th:text="${oneRoom.roomRentLength}"></span>
+원룸 상세 정보 :<span th:text="${oneRoom.roomDescription}"></span>
+원룸 이미지 :<span th:text="${oneRoom.roomPhoto}"></span>
+
+<h2>계약 진행 현황</h2>
+<p>임대인:</p>
+<p>임대인 번호:</p>
+<p>임차인 :</p>
+<p>임차인 번호:</p>
+<!--            <a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
+<script>
+
+</script>
+</body>
+</html>

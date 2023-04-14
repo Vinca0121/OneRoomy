@@ -14,20 +14,30 @@
     <button type="button" onClick="location.href='/OneRoom/enroll'" style="background-color: palegreen;">원룸 등록하기</button>
 </form>
 
+<!--원룸 등록 시, 등록한 원룸을 보여줌-->
+<table class="rwd-table">
+    <tr>
+        <th>원룸 명</th>
+        <th>월세</th>
+        <th>위치</th>
+        <th>임대기간</th>
+        <th>추가사항</th>
+    </tr>
+    <!-- tr th:each : 행 반복문을 수행하겠다는 의미입니다 [여러 데이터 출력] -->
+    <tr th:each="room : ${roomList}">
+        <td data-th="원룸 명"><a th:href="@{/OneRoom/information(id=${room.id})}" th:text="${room.roomName}"></a></td>
+        <td data-th="월세"><span th:text="|${room.roomMonthly}만원|"></span></td>
+        <td data-th="위치"><span th:text="${room.roomLocations}"></span></td>
+        <td data-th="임대기간"><span th:text="|${room.roomRentLength}개월|"></span></td>
+        <td data-th="추가사항"><span th:text="${room.roomDescription}"></span></td>
+    </tr>
+</table>
+
 
 <script th:inline="javascript">
-
-    /** 세션 데이터 불러와서 여기서 login_user의 value값으로 넣어줘야함 */
-    /** 굳이..세션 데이터에 안넣어줘도 지금은 되긴할듯? 메인페이지에 현재 id 값 넘겼음 */
-
     /**  홈화면에 접속 시, 현재 접속한 유저의 ID 값 Update */
     const login_userID = document.getElementById('login_user').value;
     localStorage.setItem('login_userId', login_userID);
-
-
-
-
-
 </script>
 </body>
 </html>

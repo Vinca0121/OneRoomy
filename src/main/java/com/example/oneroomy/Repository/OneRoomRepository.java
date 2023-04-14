@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OneRoomRepository extends JpaRepository<OneRoom, Long> {
 
+    OneRoom getOne(Long id);
 }

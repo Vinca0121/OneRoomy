@@ -2,7 +2,9 @@ package com.example.oneroomy.Controller;
 
 
 import com.example.oneroomy.DTO.UserDTO;
+import com.example.oneroomy.Domain.OneRoom;
 import com.example.oneroomy.Domain.User;
+import com.example.oneroomy.Service.OneRoomService;
 import com.example.oneroomy.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,15 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 public class UserController {
 
     // autowired 필요 X Configuration사용
     private UserService userService;
+    private OneRoomService oneRoomService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, OneRoomService oneRoomService) {
         this.userService = userService;
+        this.oneRoomService = oneRoomService;
     }
 
     /** 기본적으로 로그인 화면으로 이동 */
@@ -35,6 +41,10 @@ public class UserController {
         // 뭔가 웹 페이지에 저장된 값을 통해서, 로그인이 되어있는 경우 바로 홈화면으로 전환되도록 하는 것이 필요할듯.
         User user = userService.getOneUser(id);
         model.addAttribute("user",user);
+
+        /** 2. 원룸전체찾기 */
+        List<OneRoom> roomList = oneRoomService.findAllOneRooms();
+        model.addAttribute("roomList",roomList);
         return "home";
     }
 
@@ -65,6 +75,9 @@ public class UserController {
         /** 반환 된 유저의 id를 크롬 세션데이터에 저장하도록 값을 넘김 */
         model.addAttribute("user",user);
 
+        /** 2. 원룸전체찾기 */
+        List<OneRoom> roomList = oneRoomService.findAllOneRooms();
+        model.addAttribute("roomList",roomList);
         if(user != null)
         {
             return "home";
@@ -100,6 +113,10 @@ public class UserController {
         // create같지만 id가 같으므로 중복되지않고, 덮어씌워짐
         userService.createUser(user);
         model.addAttribute("user",user);
+
+        /** 2. 원룸전체찾기 */
+        List<OneRoom> roomList = oneRoomService.findAllOneRooms();
+        model.addAttribute("roomList",roomList);
         return "home";
     }
 

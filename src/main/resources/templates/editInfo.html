@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/editinfo.css}"/>
     <title>회원정보수정 페이지</title>
 </head>
-<body style="background-image: url('background/street.png'); background-size: cover; background-repeat: no-repeat;">
+<body style="background-image: url('/background/street.png'); background-size: cover; background-repeat: no-repeat;">
 <!-- <form action="/signup" method="post" > -->
 <h1 class="welcome">Welcome to OneRoomy!</h1>
 <div class="container" id="container">
@@ -34,7 +34,7 @@
             <a href="#">입력한 사항이 맞나요?</a>
             <button type="submit">수정하기</button>
             <button type="button" onClick="location.href='/home?id=' + document.getElementById('login_user').value" style="background-color: gray;">취소하기</button>
-<!--            <a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
+            <!--            <a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
         </form>
     </div>
 
