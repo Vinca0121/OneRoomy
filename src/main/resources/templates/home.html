@@ -23,56 +23,7 @@
     const login_userID = document.getElementById('login_user').value;
     localStorage.setItem('login_userId', login_userID);
 
-    /*<![CDATA[*/
-    // 옵션 생성기
-    function createOption(text, value){
-        var objOption = document.createElement("option");
-        objOption.text = text;
-        objOption.value = value;
-        return objOption;
-    }
 
-
-    function updateGenre(nation){
-        // 장르 컨텐츠 찾기
-        const gens = document.getElementById('gens');
-        // 맨 위에 제외 전부삭제
-        for(let i=1; i<gens.options.length; i++)
-        {
-            gens.remove(i);
-        }
-        // gens.options.length=0;
-        // 새롭게 세팅
-        if(nation == "미국"){
-            gens.options.add(createOption("DC코믹스마블","DC코믹스마블"))
-            gens.options.add(createOption("코믹스리터러리","코믹스리터러리"))
-            gens.options.add(createOption("그래픽노블","그래픽노블"))
-        }
-
-        else if(nation == "대한민국"){
-            gens.options.add(createOption("순정만화","순정만화"))
-            gens.options.add(createOption("소년만화","소년만화"))
-            gens.options.add(createOption("성인만화","성인만화"))
-            gens.options.add(createOption("기획도서","기획도서"))
-            gens.options.add(createOption("만화잡지","만화잡지"))
-        }
-
-        else if(nation == "일본"){
-            gens.options.add(createOption("순정만화","순정만화"))
-            gens.options.add(createOption("소년만화","소년만화"))
-            gens.options.add(createOption("성인만화","성인만화"))
-            gens.options.add(createOption("기획도서","기획도서"))
-        }
-    }
-
-    // 국가 변경 시, 장르 풀 변경
-    function changeGenre(){
-        const ns = document.getElementById('ns');
-        var current_ns = ns.options[ns.selectedIndex].value;
-        // 현재 국가에 맞게 장르 업데이트
-        updateGenre(current_ns)
-
-    }
 
 
 

@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+
 
 @Data
 @Entity
@@ -20,13 +22,13 @@ public class Contract {
     private Long id;
 
     @CreationTimestamp
-    private String startDate;
+    private Timestamp startDate;
 
     @UpdateTimestamp
-    private String EndDate;
+    private Timestamp EndDate;
 
     /** 외래 키 */
-    @ManyToOneㅋㅋ
+    @ManyToOne
     @JoinColumn(name = "provide_user_id") // 외래키 컬럼 명 설정
     private User provideUser;
 
