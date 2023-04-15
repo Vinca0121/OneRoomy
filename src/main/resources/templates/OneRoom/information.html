@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/information.css}"/>
   <title>원룸 정보 디테일 페이지</title>
 </head>
-<body style="background-image: url('/background/street.png'); background-size: cover; background-repeat: no-repeat;">
+<body style="background-image: url('/background/street.pngz'); background-size: cover; background-repeat: no-repeat;">
 <!-- <form action="/signup" method="post" > -->
 <h1>원룸 정보</h1>
 원룸 명 : <span th:text="${oneRoom.roomName}"></span>
@@ -13,15 +13,29 @@
 위치 : <span th:text="${oneRoom.roomLocations}"></span>
 임대기간 : <span th:text="${oneRoom.roomRentLength}"></span>
 원룸 상세 정보 :<span th:text="${oneRoom.roomDescription}"></span>
-원룸 이미지 :<span th:text="${oneRoom.roomPhoto}"></span>
+원룸 이미지 :<div><img th:src= "@{${oneRoom.roomPhoto}}"  width="500" height="300"></div>
 
 <h2>계약 진행 현황</h2>
-<p>임대인:</p>
-<p>임대인 번호:</p>
-<p>임차인 :</p>
-<p>임차인 번호:</p>
-<!--            <a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
+임대인 : <span th:text="${provide_user != null ? provide_user.username : '정보 없음'}"></span>
+임대인 번호 : <span th:text="${provide_user != null ? provide_user.phonenumber : '없음'}"></span>
+임차인 :<span th:text="${rental_user != null ? rental_user.username : '미지정'}"></span>
+임차인 번호 :<span th:text="${rental_user != null ? rental_user.phonenumber : '미지정'}"></span>
+<!--<a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
+<button type="button" onClick="location.href='/logout'" style="background-color: lightsalmon;">로그아웃</button>
+
+<form action="/OneRoom/delete" method="get">
+  <input type="hidden" name="del_oneroom_id" th:value="${oneRoom.id}"><br>
+  <input id="login_id_input" type="hidden" name="login_id"><br>
+  <button type="submit" formmethod="GET">원룸 삭제</button>
+</form>
+
+<button type="button" onClick="location.href='/OneRoom/goContract'" style="background-color:seagreen ">계약 요청</button>
+<button type="button" onClick="location.href='/OneRoom/cancelContract'" style="background-color:#a8a0f5">계약 취소</button>
+<button type="button" onClick="location.href='/OneRoom/endContract'" style="background-color:gold ">계약 완료</button>
 <script>
+  var login_id = localStorage.getItem('login_userId');
+  var input = document.getElementById('login_id_input');
+  input.value = login_id;
 
 </script>
 </body>

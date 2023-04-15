@@ -17,6 +17,7 @@ public class OneRoomDTO {
     private Long roomMonthly;
     private String roomLocations;
     private Long roomRentLength;
+    /** URL */
     private String roomPhoto;
     private String roomDescription;
     private Long roomContract;

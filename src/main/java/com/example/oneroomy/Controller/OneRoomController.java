@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -40,9 +44,27 @@ public class OneRoomController {
 
     /** 원룸 등록 */
     @PostMapping("/enroll")
-    public String registerUser(OneRoomDTO oneRoomDTO, @RequestParam("login_id") Long login_id) {
+    public String registerUser(OneRoomDTO oneRoomDTO, @RequestParam("login_id") Long login_id, @RequestParam("roomPhotoFile") MultipartFile roomPhotoFile)
+    {
+        if (!roomPhotoFile.isEmpty()) {
+            try {
+                // 이미지 파일을 저장할 경로 설정
+                String uploadDir = "C:/Users/USER/IdeaProjects/OneRoomy/src/main/resources/static/roomPhoto/";
+                String fileName = roomPhotoFile.getOriginalFilename();
+                String filePath = uploadDir + fileName;
 
-        log.debug("로그인한 아이디는 >>>>.",login_id.toString());
+                // 이미지 파일을 서버에 저장
+                roomPhotoFile.transferTo(new File(filePath));
+
+                // 서버에서 볼(찾을) 이미지 파일의 URL을 OneRoomDTO에 저장
+                String imageUrl = "/roomPhoto/" + fileName; // 예시: "/roomPhoto/image.jpg"
+                oneRoomDTO.setRoomPhoto(imageUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // 이미지 파일 저장 실패 시 예외 처리
+            }
+        }
+        System.out.println(login_id);
 
         // 빌더해서 DB에 저장할 때, 자동으로 id값 들어감.
         OneRoom oneRoom = OneRoom.builder()
@@ -83,7 +105,36 @@ public class OneRoomController {
     public String goInfoPage(@RequestParam("id") Long id, Model model){
         OneRoom oneRoom = oneRoomService.findOneRoomByID(id);
         model.addAttribute("oneRoom",oneRoom);
+
+        // 임대인 임차인 정보를 가져와서 출력해주도록 해야함
+        User provide_user = oneRoom.getProvideUser();
+        User rental_user = oneRoom.getRentalUser();
+
+        model.addAttribute("provide_user",provide_user);
+        model.addAttribute("rental_user",rental_user);
+
         return "OneRoom/information";
+    }
+
+
+    @GetMapping("/delete")
+    public String deleteOneRoom(@RequestParam("del_oneroom_id") Long del_oneroom_id, @RequestParam("login_id") Long login_id){
+
+        // 원룸 가져오고
+        OneRoom oneRoom = oneRoomService.findOneRoomByID(del_oneroom_id);
+        // 원룸의 프로바이더 id가 현재 로그인한 아이디와 일치하는지 검사
+        if(oneRoom.getProvideUser().getId() == login_id)
+        {
+            // 원룸 삭제 전에, 해당 원룸을 알고있는(외래키로 가진) 자식 Contact 튜플을 삭제시켜야함
+
+            // 원룸 삭제하고
+            oneRoomService.deleteOneRoom(del_oneroom_id);
+            // 홈 화면으로 이동
+            return "redirect:/home?id=" + login_id;
+        }
+        else{
+            return "Error";
+        }
     }
 
 }

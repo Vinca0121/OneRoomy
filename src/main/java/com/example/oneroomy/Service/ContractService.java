@@ -19,4 +19,9 @@ public class ContractService {
         return contractRepository.save(contract);
     }
 
+    // 계약 삭제 - 원룸 삭제 시 함께 이루어지도록 한다.
+
+
+
+
 }

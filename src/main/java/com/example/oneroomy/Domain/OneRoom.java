@@ -35,4 +35,8 @@ public class OneRoom {
     @JoinColumn(name = "rentalUser_id") // 외래키 컬럼 명 설정
     private User rentalUser;
 
+    /** mappedBy를 통해 양방향 관계에서 FK를 가지고 있는 주인은 contract가 됨. */
+    @OneToOne(mappedBy = "oneRoom", cascade = CascadeType.ALL)
+    private Contract contract;
+
 }

@@ -30,4 +30,9 @@ public class OneRoomService {
         return oneRoomRepository.findAll();
     }
 
+    // 원룸 하나 삭제
+    public void deleteOneRoom(Long id){
+        oneRoomRepository.deleteById(id);
+    }
+
 }

@@ -6,17 +6,16 @@
 </head>
 <body style="background-image: url('/background/street.png'); background-size: cover; background-repeat: no-repeat;">
   <div>
-    <form id="myForm" method="post">
+    <form id="myForm" method="post" enctype="multipart/form-data">
       <h1>원룸 등록 페이지</h1>
-      <input type="hidden" id="login_text", value="" name="login_id"/>
-
-
+<!--      <input type="hidden" id="login_text", value="" name="login_id"/>-->
       <input type="text" placeholder="원룸 명" name="roomName"/>
       <input type="number" placeholder="원룸 보증금" name="roomDeposit"/>
       <input type="number" placeholder="원룸 월세" name="roomMonthly"/>
       <input type="text" placeholder="원룸 위치" name="roomLocations"/>
       <input type="number" placeholder="원룸 임대 기간(개월)" name="roomRentLength"/>
-      <input type="text" placeholder="원룸 사진"name="roomPhoto"/>
+      <input type="file" id="roomPhotoFile" name="roomPhotoFile">
+<!--      <input type="text" placeholder="원룸 사진" name="roomPhoto"/>-->
       <input type="text" placeholder="추가 정보" name="roomDescription"/>
       <input type="hidden" placeholder="계약 진행 상황" name="roomContract" th:value="0"/>
       <button type="submit">원룸 등록하기</button>
@@ -27,6 +26,16 @@
   // form 객체를 찾아서 해당 action 값을 id를 전달하여 재설정
   var form = document.getElementById('myForm');
   form.action = '/OneRoom/enroll?login_id=' + login_id;
+
+  document.getElementById('roomPhotoFile').addEventListener('change', function(event) {
+    var file = event.target.files[0];
+    var maxFileSize = 1048576; // 5MB (원하는 파일 크기 제한을 설정해주세요)
+
+    if (file && file.size > maxFileSize) {
+      alert('파일 크기가 초과되었습니다.'); // 오류 메시지 출력
+      event.target.value = ''; // 파일 선택 input 초기화
+    }
+  });
 
 </script>
 
