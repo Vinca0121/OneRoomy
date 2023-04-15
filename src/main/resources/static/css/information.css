@@ -4,37 +4,6 @@
     box-sizing: border-box;
 }
 
-.welcome {
-    font-size: 48px;
-    font-weight: bold;
-    color: #fdfdfd;
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 50px;
-    animation: scaleAnimation 1.0s alternate infinite;
-}
-
-@keyframes scaleAnimation {
-    from {
-        transform: scale(1);
-        color: #fdfdfd;
-    }
-    to {
-        transform: scale(1.1);
-        color: rgb(255, 87, 87); /* 원하는 무지개 색상으로 변경 */
-    }
-}
-
-body {
-    background: #f6f5f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: 'Montserrat', sans-serif;
-    height: 100vh;
-    margin: -20px 0 50px;
-}
 
 h1 {
     font-weight: bold;

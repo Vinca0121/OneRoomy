@@ -6,37 +6,89 @@
 </head>
 <body style="background-image: url('/background/street.pngz'); background-size: cover; background-repeat: no-repeat;">
 <!-- <form action="/signup" method="post" > -->
+
+<span type="hidden" name="del_oneroom_id" th:value="${oneRoom.roomContract}"></span>
+
+<h1 th:id="contractStatus" style="color: mediumslateblue;">
+  계약 상태:
+</h1>
 <h1>원룸 정보</h1>
-원룸 명 : <span th:text="${oneRoom.roomName}"></span>
-보증금 : <span th:text="${oneRoom.roomDeposit}"></span>
-월세 : <span th:text="${oneRoom.roomMonthly}"></span>
-위치 : <span th:text="${oneRoom.roomLocations}"></span>
-임대기간 : <span th:text="${oneRoom.roomRentLength}"></span>
-원룸 상세 정보 :<span th:text="${oneRoom.roomDescription}"></span>
-원룸 이미지 :<div><img th:src= "@{${oneRoom.roomPhoto}}"  width="500" height="300"></div>
+원룸 명 : <span th:text="${oneRoom.roomName}"></span><br>
+보증금 : <span th:text="${oneRoom.roomDeposit}"></span><br>
+월세 : <span th:text="${oneRoom.roomMonthly}"></span><br>
+위치 : <span th:text="${oneRoom.roomLocations}"></span><br>
+임대기간 : <span th:text="${oneRoom.roomRentLength}"></span><br>
+원룸 상세 정보 : <span th:text="${oneRoom.roomDescription}"></span><br>
+원룸 이미지 : <img th:src= "@{${oneRoom.roomPhoto}}"  width="200" height="200"></div>
 
 <h2>계약 진행 현황</h2>
-임대인 : <span th:text="${provide_user != null ? provide_user.username : '정보 없음'}"></span>
-임대인 번호 : <span th:text="${provide_user != null ? provide_user.phonenumber : '없음'}"></span>
-임차인 :<span th:text="${rental_user != null ? rental_user.username : '미지정'}"></span>
-임차인 번호 :<span th:text="${rental_user != null ? rental_user.phonenumber : '미지정'}"></span>
+임대인 : <span th:text="${provide_user != null ? provide_user.username : '정보 없음'}"></span><br>
+임대인 번호 : <span th:text="${provide_user != null ? provide_user.phonenumber : '없음'}"></span><br>
+임차인 : <span th:text="${rental_user != null ? rental_user.username : '미지정'}"></span><br>
+임차인 번호 : <span th:text="${rental_user != null ? rental_user.phonenumber : '미지정'}"></span><br>
 <!--<a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
+<h2>기능</h2>
 <button type="button" onClick="location.href='/logout'" style="background-color: lightsalmon;">로그아웃</button>
 
 <form action="/OneRoom/delete" method="get">
   <input type="hidden" name="del_oneroom_id" th:value="${oneRoom.id}"><br>
-  <input id="login_id_input" type="hidden" name="login_id"><br>
+  <input id="login_id_input1" type="hidden" name="login_id"><br>
   <button type="submit" formmethod="GET">원룸 삭제</button>
 </form>
 
-<button type="button" onClick="location.href='/OneRoom/goContract'" style="background-color:seagreen ">계약 요청</button>
-<button type="button" onClick="location.href='/OneRoom/cancelContract'" style="background-color:#a8a0f5">계약 취소</button>
-<button type="button" onClick="location.href='/OneRoom/endContract'" style="background-color:gold ">계약 완료</button>
+
+<form action="/Contract/startContract" method="get">
+  <input type="hidden" name="oneroom_id" th:value="${oneRoom.id}"><br>
+  <input id="login_id_input2" type="hidden" name="login_id"><br>
+  <button type="submit" formmethod="GET">계약 요청</button>
+</form>
+
+<form action="/Contract/stopContract" method="get">
+  <input type="hidden" name="oneroom_id" th:value="${oneRoom.id}"><br>
+  <input id="login_id_input3" type="hidden" name="login_id"><br>
+  <button type="submit" formmethod="GET">계약 취소</button>
+</form>
+
+
+<form action="/Contract/endContract" method="get" id="contractForm">
+  <input type="hidden" name="oneroom_id" th:value="${oneRoom.id}"><br>
+  <input id="login_id_input4" type="hidden" name="login_id"><br>
+  <button type="submit" formmethod="GET" onclick="checkContractStatus()">계약 완료</button>
+</form>
+
+
 <script>
   var login_id = localStorage.getItem('login_userId');
-  var input = document.getElementById('login_id_input');
-  input.value = login_id;
 
+  var input1 = document.getElementById('login_id_input1');
+  var input2 = document.getElementById('login_id_input2');
+  var input3 = document.getElementById('login_id_input3');
+  var input4 = document.getElementById('login_id_input4');
+
+  input1.value = login_id;
+  input2.value = login_id;
+  input3.value = login_id;
+  input4.value = login_id;
+
+  /* oneRoom.roomContract 값에 따라 계약 상태 텍스트를 표시 */
+  var contractStatus = [[${oneRoom.roomContract}]];
+
+  if (contractStatus === 0) {
+    document.getElementById('contractStatus').innerText += '계약 가능';
+  } else if (contractStatus === 1) {
+    document.getElementById('contractStatus').innerText += '계약 중';
+  } else if (contractStatus === 2) {
+    document.getElementById('contractStatus').innerText += '계약 완료';
+  }
+
+  /*계약 완료 방지*/
+  function checkContractStatus() {
+    if (contractStatus !== 1) {
+      alert("계약이 진행중일 때만 완료가 가능합니다!");
+      return false;
+    }
+  }
 </script>
+
 </body>
 </html>
