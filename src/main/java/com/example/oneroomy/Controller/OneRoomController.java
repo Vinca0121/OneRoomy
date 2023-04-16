@@ -19,6 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -135,6 +138,136 @@ public class OneRoomController {
         else{
             return "Error";
         }
+    }
+
+
+    @GetMapping("/search")
+    public String goSearchPage(){
+        return "OneRoom/search";
+    }
+
+
+    @PostMapping("/search")
+    public String goSearchResult(OneRoomDTO oneRoomDTO, Model model){
+        String roomName = oneRoomDTO.getRoomName();
+        String roomLocation = oneRoomDTO.getRoomLocations();
+        Long roomMonthly = oneRoomDTO.getRoomMonthly();
+        Long roomRentLength = oneRoomDTO.getRoomRentLength();
+
+        // 일단 다 가져오자.
+        List<OneRoom> oneRoomList = oneRoomService.findAllOneRooms();
+        List<OneRoom> resultoneRoomList = new ArrayList<>(); // ArrayList를 사용한 예시
+        if(roomMonthly == null) {
+            System.out.println("공백이 들어왔을 때 숫자는 null");
+        }
+        // 이름만 (1)
+        if(roomName != "")
+        {
+            System.out.println("이름");
+            System.out.println(roomName);
+            resultoneRoomList = oneRoomList.stream()
+                    .filter(r -> r.getRoomName().contains(roomName))
+                    .collect(Collectors.toList());
+            // 이름 + 위치 (2)
+            if(roomLocation != "")
+            {
+                resultoneRoomList = resultoneRoomList.stream()
+                        .filter(r -> r.getRoomLocations().contains(roomLocation))
+                        .collect(Collectors.toList());
+                // 이름 + 워치 +  월세 (3)
+                if(roomMonthly != null)
+                {
+                    resultoneRoomList = resultoneRoomList.stream()
+                            .filter(r -> r.getRoomMonthly() <= roomMonthly)
+                            .collect(Collectors.toList());
+                    // 이름 + 위치 + 월세 + 기간 (4)
+                    if(roomRentLength != null)
+                    {
+                        resultoneRoomList = resultoneRoomList.stream()
+                                .filter(r -> roomRentLength >= 7 ? r.getRoomRentLength() > roomRentLength : r.getRoomRentLength() <= roomRentLength)
+                                .collect(Collectors.toList());
+                    }
+                }
+            }
+            // 이름 + 월세 (5)
+            else if(roomMonthly != null)
+            {
+                resultoneRoomList = resultoneRoomList.stream()
+                        .filter(r -> r.getRoomMonthly() <= roomMonthly)
+                        .collect(Collectors.toList());
+            }
+        }
+
+        // 위치만 (6)
+        else if(roomLocation != "") {
+            System.out.println("위치");
+            resultoneRoomList = oneRoomList.stream()
+                    .filter(r -> r.getRoomLocations().contains(roomLocation))
+                    .collect(Collectors.toList());
+            // 위치 + 월세 (7)
+            if(roomMonthly != null) {
+                resultoneRoomList = resultoneRoomList.stream()
+                        .filter(r -> r.getRoomMonthly() <= roomMonthly)
+                        .collect(Collectors.toList());
+                // 위치 + 월세 + 기간 (8)
+                if(roomLocation != "") {
+                    resultoneRoomList = resultoneRoomList.stream()
+                            .filter(r -> roomRentLength >= 7 ? r.getRoomRentLength() > roomRentLength : r.getRoomRentLength() <= roomRentLength)
+                            .collect(Collectors.toList());
+                }
+            }
+            // 위치 + 기간 (9)
+            else if(roomRentLength != null)
+            {
+                resultoneRoomList = resultoneRoomList.stream()
+                        .filter(r -> roomRentLength >= 7 ? r.getRoomRentLength() > roomRentLength : r.getRoomRentLength() <= roomRentLength)
+                        .collect(Collectors.toList());
+            }
+        }
+
+        // 월세만 (10)
+        else if(roomMonthly != null) {
+            System.out.println("월세");
+            resultoneRoomList = oneRoomList.stream()
+                    .filter(r -> r.getRoomMonthly() <= roomMonthly)
+                    .collect(Collectors.toList());
+            // 월세 + 기간 (11)
+            if(roomRentLength != null) {
+                resultoneRoomList = resultoneRoomList.stream()
+                        .filter(r -> roomRentLength >= 7 ? r.getRoomRentLength() > roomRentLength : r.getRoomRentLength() <= roomRentLength)
+                        .collect(Collectors.toList());
+                // 월세 + 기간 + 이름 (12)
+                if(roomName != "") {
+                    resultoneRoomList = resultoneRoomList.stream()
+                            .filter(r -> r.getRoomName().contains(roomName))
+                            .collect(Collectors.toList());
+                }
+            }
+        }
+        // 기간만 (13)
+        else if(roomRentLength != null) {
+            System.out.println("기간");
+            resultoneRoomList = oneRoomList.stream()
+                    .filter(r -> roomRentLength >= 7 ? r.getRoomRentLength() > roomRentLength : r.getRoomRentLength() <= roomRentLength)
+                    .collect(Collectors.toList());
+            System.out.println("전송된 roomlength는"+roomRentLength.toString());
+            // 기간 + 이름 (14)
+            if(roomName != "") {
+                resultoneRoomList = resultoneRoomList.stream()
+                        .filter(r -> r.getRoomName().contains(roomName))
+                        .collect(Collectors.toList());
+                // 기간 + 이름 + 위치 (15)
+                if(roomLocation != "") {
+                    resultoneRoomList = resultoneRoomList.stream()
+                            .filter(r -> r.getRoomLocations().contains(roomLocation))
+                            .collect(Collectors.toList());
+                }
+            }
+        }
+
+        model.addAttribute("roomList",resultoneRoomList);
+
+        return "OneRoom/search";
     }
 
 }

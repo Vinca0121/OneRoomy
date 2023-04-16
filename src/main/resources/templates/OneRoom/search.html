@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/search.css}"/>
+    <title>원룸 검색 페이지</title>
+</head>
+<body>
+<div class="s010">
+    <form action="/OneRoom/search" method="POST">
+        <div class="inner-form">
+            <div class="basic-search">
+                <div class="input-field">
+                    <input id="search" type="text" name="roomName" placeholder="원룸 명을 입력해주세요!" value=""/>
+                    <!-- value 속성을 생략하거나 비어있는 값으로 설정 -->
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="advance-search">
+                <span class="desc">추가 사항 선택</span>
+                <div class="row">
+                    <div class="input-field">
+                        <div class="input-select">
+                            <select data-trigger="" name="roomMonthly">
+                                <option placeholder="" value="">월세 가격</option>
+                                <option value="20">~20만원</option>
+                                <option value="30">~30만원</option>
+                                <option value="40">~40만원</option>
+                                <option value="50">~50만원</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-field">
+                        <div class="input-select">
+                            <select data-trigger="" name="roomLocations">
+                                <option placeholder="" value="">위치</option>
+                                <option>거의동</option>
+                                <option>양호동</option>
+                                <option>공단동</option>
+                                <option>원남동</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-field">
+                        <div class="input-select">
+                            <select data-trigger="" name="roomRentLength">
+                                <option placeholder="" value="">임대기간(개월)</option>
+                                <option value="1">~1개월</option>
+                                <option value="3">~3개월</option>
+                                <option value="6">~6개월</option>
+                                <option value="7">6개월 초과</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row third">
+                    <div class="input-field">
+                        <div class="result-count">
+                            <span></span></div>
+                        <div class="group-btn">
+                            <button class="btn-delete" id="delete">초기화</button>
+                            <button type="submit" class="btn-search">검색</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 테이블 선언 실시 -->
+<table class="rwd-table">
+    <tr>
+        <th>원룸 명</th>
+        <th>월세</th>
+        <th>위치</th>
+        <th>임대기간</th>
+        <th>추가 사항</th>
+    </tr>
+    <!-- tr th:each : 행 반복문을 수행하겠다는 의미입니다 [여러 데이터 출력] -->
+    <tr th:each="room : ${roomList}">
+        <td data-th="원룸 명"><a th:href="@{/OneRoom/information(id=${room.id})}" th:text="${room.roomName}"></a></td>
+        <td data-th="월세"><span th:text="|${room.roomMonthly}만원|"></span></td>
+        <td data-th="위치"><span th:text="${room.roomLocations}"></span></td>
+        <td data-th="임대기간"><span th:text="|${room.roomRentLength}개월|"></span></td>
+        <td data-th="추가사항"><span th:text="${room.roomDescription}"></span></td>
+    </tr>
+</table>
+
+
+
+
+<script th:src="@{/js/extention/choices.js}"></script>
+
+<script>
+    const customSelects = document.querySelectorAll("select");
+    const deleteBtn = document.getElementById('delete')
+    const choices = new Choices('select',
+        {
+            searchEnabled: false,
+            itemSelectText: '',
+            removeItemButton: true,
+        });
+    for (let i = 0; i < customSelects.length; i++)
+    {
+        customSelects[i].addEventListener('addItem', function(event)
+        {
+            if (event.detail.value)
+            {
+                let parent = this.parentNode.parentNode
+                parent.classList.add('valid')
+                parent.classList.remove('invalid')
+            }
+            else
+            {
+                let parent = this.parentNode.parentNode
+                parent.classList.add('invalid')
+                parent.classList.remove('valid')
+            }
+        }, false);
+    }
+    deleteBtn.addEventListener("click", function(e)
+    {
+        e.preventDefault()
+        const deleteAll = document.querySelectorAll('.choices__button')
+        for (let i = 0; i < deleteAll.length; i++)
+        {
+            deleteAll[i].click();
+        }
+    });
+
+</script>
+</body>
+</html>
