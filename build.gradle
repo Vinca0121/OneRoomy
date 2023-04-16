@@ -37,6 +37,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-devtools'
 
+    // 자동 static 파일 업데이트
+    implementation 'org.springframework.boot:spring-boot-devtools'
+
 }
 
 tasks.named('test') {

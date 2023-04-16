@@ -52,7 +52,11 @@ public class OneRoomController {
         if (!roomPhotoFile.isEmpty()) {
             try {
                 // 이미지 파일을 저장할 경로 설정
-                String uploadDir = "C:/Users/USER/IdeaProjects/OneRoomy/src/main/resources/static/roomPhoto/";
+
+                // 집
+//                String uploadDir = "C:/Users/USER/IdeaProjects/OneRoomy/src/main/resources/static/roomPhoto/";
+                // 학교
+                String uploadDir = "D:/Springs/OneRoomy/src/main/resources/static/roomPhoto/";
                 String fileName = roomPhotoFile.getOriginalFilename();
                 String filePath = uploadDir + fileName;
 
@@ -270,4 +274,16 @@ public class OneRoomController {
         return "OneRoom/search";
     }
 
+
+    @GetMapping("/myRoom")
+    public String goSearchPage(@RequestParam("login_id") Long login_id, Model model)
+    {
+        User current_user = userService.getOneUser(login_id);
+
+        // 원룸 DB에서 현재 user가 임대인 또는 임차인으로 등록된 원룸을 가져온다.
+        List<OneRoom> roomList = oneRoomService.findOneRoomsByUser(current_user);
+
+        model.addAttribute("roomList",roomList);
+        return "OneRoom/myRoom";
+    }
 }

@@ -5,6 +5,10 @@
     <title>메인 페이지</title>
 </head>
 <body>
+<h2>통계 현황</h2>
+평균 보증금 : <p></p>
+평균 월세 : <p></p>
+평균 임대(거주)기간 : <p></p>
 <form action="/editinfo" method="GET">
         <!-- 현재 로그인한 회원 id를 찾은 뒤 여기로 전달해줘야함 -->
 <!--    현재 로그인 시, userid를 메인 페이지에 전달해서 뿌려주고 있음-->
@@ -13,6 +17,7 @@
     <button type="button" onClick="location.href='/logout'" style="background-color: lightsalmon;">로그아웃</button>
     <button type="button" onClick="location.href='/OneRoom/enroll'" style="background-color: palegreen;">원룸 등록하기</button>
     <button type="button" onClick="location.href='/OneRoom/search'" style="background-color: chocolate">원룸 검색으로 이동</button>
+    <button type="button" onClick="goToMyRoom()" style="background-color: chocolate">내 원룸 보기</button>
 </form>
 
 <!--원룸 등록 시, 등록한 원룸을 보여줌-->
@@ -39,6 +44,15 @@
     /**  홈화면에 접속 시, 현재 접속한 유저의 ID 값 Update */
     const login_userID = document.getElementById('login_user').value;
     localStorage.setItem('login_userId', login_userID);
+
+    function goToMyRoom() {
+        // login_id 값을 가져옵니다.
+        const login_id = localStorage.getItem('login_userId');
+
+        // 새로운 URL에 login_id 값을 파라미터로 추가하여 이동합니다.
+        location.href = '/OneRoom/myRoom?login_id=' + login_id;
+    }
+
 </script>
 </body>
 </html>

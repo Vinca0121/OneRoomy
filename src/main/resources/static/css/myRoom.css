@@ -1,0 +1,30 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.product-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.product-container img {
+    width: 150px;
+    margin-right: 20px;
+}
+
+.product-container h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.product-container p {
+    font-size: 14px;
+    color: #777;
+    margin: 5px 0;
+}

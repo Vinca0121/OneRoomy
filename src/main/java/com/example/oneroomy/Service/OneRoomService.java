@@ -35,4 +35,10 @@ public class OneRoomService {
         oneRoomRepository.deleteById(id);
     }
 
+    // USER를 사용해서 원룸 찾기
+    // User 정보를 기반으로 해당하는 OneRoom 리스트를 조회하는 메서드
+    public List<OneRoom> findOneRoomsByUser(User user) {
+        return oneRoomRepository.findByProvideUserOrRentalUser(user, user);
+    }
+
 }
