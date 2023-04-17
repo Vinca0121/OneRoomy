@@ -4,9 +4,11 @@ package com.example.oneroomy.Controller;
 import com.example.oneroomy.DTO.OneRoomDTO;
 import com.example.oneroomy.Domain.Contract;
 import com.example.oneroomy.Domain.OneRoom;
+import com.example.oneroomy.Domain.Statistic;
 import com.example.oneroomy.Domain.User;
 import com.example.oneroomy.Service.ContractService;
 import com.example.oneroomy.Service.OneRoomService;
+import com.example.oneroomy.Service.StatisticService;
 import com.example.oneroomy.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,12 +33,13 @@ public class OneRoomController {
     private OneRoomService oneRoomService;
     private UserService userService;
     private ContractService contractService;
+    private StatisticService statisticService;
 
-
-    public OneRoomController(OneRoomService oneRoomService, UserService userService, ContractService contractService) {
+    public OneRoomController(OneRoomService oneRoomService, UserService userService, ContractService contractService, StatisticService statisticService) {
         this.oneRoomService = oneRoomService;
         this.userService = userService;
         this.contractService = contractService;
+        this.statisticService = statisticService;
     }
 
     /** 등록페이지로 이동 */
@@ -92,7 +95,7 @@ public class OneRoomController {
         oneRoomService.createOneRoom(oneRoom);
 
 
-        /** 2 원룸 데이터베이스 생성 시, 계약 테이블인 contract 또한 생성되어야 함 */
+        /** 2. 원룸 데이터베이스 생성 시, 계약 테이블인 contract 또한 생성되어야 함 */
 
         // 빌더 시 DB에 저장할 때, 자동으로 id, start_date, end_date 들어감.
         Contract contract = Contract.builder()
@@ -105,7 +108,11 @@ public class OneRoomController {
         /*이후, 계약 데이터베이스 생성 */
         contractService.createContract(contract);
 
-        return "redirect:/home?id=" + login_id;
+        /** 3. 원룸 등록 시, 평균 임대 등록된 평균 보증금, 월세, 임대 기간 계산해도록 요청 */
+        statisticService.updateStatistic();
+
+
+        return "redirect:/home?id=" + login_id ;
     }
 
     @GetMapping("/information")
@@ -136,8 +143,8 @@ public class OneRoomController {
 
             // 원룸 삭제하고
             oneRoomService.deleteOneRoom(del_oneroom_id);
-            // 홈 화면으로 이동
-            return "redirect:/home?id=" + login_id;
+
+            return "redirect:/home?id=" + login_id ;
         }
         else{
             return "Error";

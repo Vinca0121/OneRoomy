@@ -53,6 +53,6 @@ public class SpringConfig {
 
     @Bean
     public StatisticService statisticService() {
-        return new StatisticService(statisticRepository);
+        return new StatisticService(statisticRepository, oneRoomRepository);
     }
 }

@@ -3,8 +3,10 @@ package com.example.oneroomy.Controller;
 
 import com.example.oneroomy.DTO.UserDTO;
 import com.example.oneroomy.Domain.OneRoom;
+import com.example.oneroomy.Domain.Statistic;
 import com.example.oneroomy.Domain.User;
 import com.example.oneroomy.Service.OneRoomService;
+import com.example.oneroomy.Service.StatisticService;
 import com.example.oneroomy.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,12 @@ public class UserController {
     // autowired 필요 X Configuration사용
     private UserService userService;
     private OneRoomService oneRoomService;
+    private StatisticService statisticService;
 
-    public UserController(UserService userService, OneRoomService oneRoomService) {
+    public UserController(UserService userService, OneRoomService oneRoomService, StatisticService statisticService) {
         this.userService = userService;
         this.oneRoomService = oneRoomService;
+        this.statisticService = statisticService;
     }
 
     /** 기본적으로 로그인 화면으로 이동 */
@@ -45,6 +49,11 @@ public class UserController {
         /** 2. 원룸전체찾기 */
         List<OneRoom> roomList = oneRoomService.findAllOneRooms();
         model.addAttribute("roomList",roomList);
+
+        /** 3. 맨마지막 Statistic 찾아서 반환 */
+        Statistic statistic = statisticService.findFinalStatistic();
+        model.addAttribute("statistic",statistic);
+
         return "home";
     }
 
@@ -78,6 +87,17 @@ public class UserController {
         /** 2. 원룸전체찾기 */
         List<OneRoom> roomList = oneRoomService.findAllOneRooms();
         model.addAttribute("roomList",roomList);
+
+        /** 3. 맨마지막 Statistic 찾아서 반환 */
+        Statistic statistic = statisticService.findFinalStatistic();
+        if(statistic == null)
+        {
+            // 없는 경우 평균을 내서 기본 데이터를 새로 만들고 다시 가져옴.
+            statisticService.updateStatistic();
+            statistic = statisticService.findFinalStatistic();
+        }
+        model.addAttribute("statistic",statistic);
+
         if(user != null)
         {
             return "home";
@@ -117,6 +137,11 @@ public class UserController {
         /** 2. 원룸전체찾기 */
         List<OneRoom> roomList = oneRoomService.findAllOneRooms();
         model.addAttribute("roomList",roomList);
+
+        /** 3. 맨마지막 Statistic 찾아서 반환 */
+        Statistic statistic = statisticService.findFinalStatistic();
+        model.addAttribute("statistic",statistic);
+
         return "home";
     }
 

@@ -6,9 +6,12 @@
 </head>
 <body>
 <h2>통계 현황</h2>
-평균 보증금 : <p></p>
-평균 월세 : <p></p>
-평균 임대(거주)기간 : <p></p>
+평균 보증금 : <span th:text="${statistic.avgDeposit}"></span>
+평균 월세 : <span th:text="${statistic.avgMonthly}"></span>
+평균 임대(거주)기간 : <span th:text="${statistic.avgRentalLength}"></span>
+통계 날짜 : <span th:text="${statistic.statisticDate}"></span>
+
+
 <form action="/editinfo" method="GET">
         <!-- 현재 로그인한 회원 id를 찾은 뒤 여기로 전달해줘야함 -->
 <!--    현재 로그인 시, userid를 메인 페이지에 전달해서 뿌려주고 있음-->
