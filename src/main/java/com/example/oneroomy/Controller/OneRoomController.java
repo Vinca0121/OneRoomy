@@ -173,6 +173,9 @@ public class OneRoomController {
     @PostMapping("/search")
     public String goSearchResult(OneRoomDTO oneRoomDTO, @RequestParam("login_id") Long login_id, Model model){
 
+        System.out.println("로그인 한 아이디 서치는 ?");
+        System.out.println(login_id);
+
         String roomName = oneRoomDTO.getRoomName();
         String roomLocation = oneRoomDTO.getRoomLocations();
         Long roomMonthly = oneRoomDTO.getRoomMonthly();
@@ -234,7 +237,7 @@ public class OneRoomController {
                         .filter(r -> r.getRoomMonthly() <= roomMonthly)
                         .collect(Collectors.toList());
                 // 위치 + 월세 + 기간 (8)
-                if(roomLocation != "") {
+                if(roomRentLength != null) {
                     resultoneRoomList = resultoneRoomList.stream()
                             .filter(r -> roomRentLength >= 7 ? r.getRoomRentLength() > roomRentLength : r.getRoomRentLength() <= roomRentLength)
                             .collect(Collectors.toList());

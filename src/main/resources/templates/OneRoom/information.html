@@ -93,6 +93,7 @@
           </div>
           <h2>원룸 정보</h2>
           <p>
+          <h4>원룸 명 : <span th:text="${oneRoom.provideUser.id}"></span><br></h4>
           <h4>원룸 명 : <span th:text="${oneRoom.roomName}"></span><br></h4>
           <h4>보증금 : <span th:text="|${oneRoom.roomDeposit}만원|"></span><br><h4>
             <h4>월세 : <span th:text="|${oneRoom.roomMonthly}만원|"></span><br></h4>
@@ -100,7 +101,7 @@
             <h4>임대기간 : <span th:text="|${oneRoom.roomRentLength}개월|"></span><br></h4>
             <h4>원룸 상세 정보 : <span th:text="${oneRoom.roomDescription}"></span><br></h4>
             </p>
-            <a th:href="@{/Contract/startContract(oneroom_id=${oneRoom.id}, login_id=${user.id})}">계약 요청</a>
+            <a id="contract-link" th:href="@{/Contract/startContract(oneroom_id=${oneRoom.id}, login_id=${user.id})}">계약 요청</a>
             <a th:href="@{/Contract/stopContract(oneroom_id=${oneRoom.id}, login_id=${user.id})}">계약 취소</a>
             <a th:href="@{/Contract/endContract(oneroom_id=${oneRoom.id}, login_id=${user.id})}" onclick="checkContractStatus()">계약 완료</a>
             <a th:href="@{/OneRoom/delete(del_oneroom_id=${oneRoom.id}, login_id=${user.id})}">원룸 삭제</a>
@@ -307,6 +308,17 @@
     location.href = '/OneRoom/myRoom?login_id=' + login_id;
   }
 
+</script>
+
+<script th:inline="javascript">
+  var contractLink = document.getElementById("contract-link");
+  /* [[${user.id}]] 와 [[${oneRoom.provideUser.id}]]는 Thymeleaf의 문법입니다. */
+  if ([[${user.id}]] == [[${oneRoom.provideUser.id}]]) {
+    contractLink.addEventListener("click", function(event) {
+      event.preventDefault();
+      alert("본인의 원룸에는 계약 요청을 할 수 없습니다!");
+    });
+  }
 </script>
 
 </body>
