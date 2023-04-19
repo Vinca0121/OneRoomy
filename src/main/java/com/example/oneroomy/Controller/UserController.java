@@ -125,20 +125,13 @@ public class UserController {
     /** 회원정보수정 요청 */
     @PostMapping("/editAccount")
     public String EditAccount(UserDTO userDTO, Model model){
-        // 폰번호와 비밀번호로 기존 유저 ID를 찾아서 해당 아이디로, user를 빌더함.
-        User exist_user = userService.getByCredentials(userDTO.getPhonenumber(), userDTO.getPassword());
+        User login_user = userService.getUserByPhone(userDTO.getPhonenumber());
+        Long user_id = login_user.getId();
+        userDTO.setId(user_id);
 
-        User user = User.builder()
-                .id(exist_user.getId())
-                .username(userDTO.getUsername())
-                .phonenumber(userDTO.getPhonenumber())
-                .password(userDTO.getPassword())
-                .locations(userDTO.getLocations())
-                .university(userDTO.getUniversity())
-                .build();
+        userService.updateUser(userDTO);
+        User user = userService.getOneUser(userDTO.getId());
 
-        // create같지만 id가 같으므로 중복되지않고, 덮어씌워짐
-        userService.createUser(user);
         model.addAttribute("user",user);
 
         /** 2. 원룸전체찾기 */

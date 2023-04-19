@@ -2,6 +2,7 @@ package com.example.oneroomy.Service;
 
 import com.example.oneroomy.Domain.User;
 import com.example.oneroomy.Repository.UserRepository;
+import com.example.oneroomy.DTO.UserDTO;
 
 public class UserService {
 
@@ -34,6 +35,23 @@ public class UserService {
     /** 유저 삭제 */
     public void deleteUser(Long id){
         userRepository.deleteById(id);
+    }
+
+    public User getUserByPhone(String phonenumber)
+    {
+        return userRepository.findByPhonenumber(phonenumber);
+    }
+
+    /** 유저 정보 업데이트 */
+    public void updateUser(UserDTO userDTO) {
+        User existingUser = userRepository.findById(userDTO.getId()).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        existingUser.setId(userDTO.getId());
+        existingUser.setUsername(userDTO.getUsername());
+        existingUser.setPhonenumber(userDTO.getPhonenumber());
+        existingUser.setPassword(userDTO.getPassword());
+        existingUser.setLocations(userDTO.getLocations());
+        existingUser.setUniversity(userDTO.getUniversity());
+        userRepository.save(existingUser);
     }
 
 }
