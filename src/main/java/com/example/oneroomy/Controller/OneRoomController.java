@@ -44,7 +44,10 @@ public class OneRoomController {
 
     /** 등록페이지로 이동 */
     @GetMapping("/enroll")
-    public String goEnrollPage(){
+    public String goEnrollPage( @RequestParam("login_id") Long login_id, Model model){
+
+        User user = userService.getOneUser(login_id);
+        model.addAttribute("user",user);
         return "OneRoom/enroll";
     }
 

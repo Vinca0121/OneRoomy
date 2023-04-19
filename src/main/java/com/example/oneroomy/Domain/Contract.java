@@ -25,19 +25,19 @@ public class Contract {
     private Timestamp startDate;
 
     @UpdateTimestamp
-    private Timestamp EndDate;
+    private Timestamp endDate;
 
-    /** 외래 키 */
-    @ManyToOne
-    @JoinColumn(name = "provide_user_id") // 외래키 컬럼 명 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provideUser_id")
     private User provideUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_user_id") // 외래키 컬럼 명 설정
     private User rentalUser;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "oneroom_id") // 외래키 컬럼 명 설정
     private OneRoom oneRoom;
 
+    // constructors, getters, setters
 }

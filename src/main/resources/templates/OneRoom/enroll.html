@@ -3,24 +3,257 @@
 <head>
   <link rel="stylesheet" type="text/css" th:href="@{/css/enroll.css}"/>
   <title>원룸 등록 페이지</title>
+  <link rel="stylesheet" type="text/css"
+        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css}" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link th:href="@{/css/responsive.css}" rel="stylesheet" />
 </head>
-<body style="background-image: url('/background/street.png'); background-size: cover; background-repeat: no-repeat;">
-  <div>
-    <form id="myForm" method="post" enctype="multipart/form-data">
-      <h1>원룸 등록 페이지</h1>
-<!--      <input type="hidden" id="login_text", value="" name="login_id"/>-->
-      <input type="text" placeholder="원룸 명" name="roomName"/>
-      <input type="number" placeholder="원룸 보증금" name="roomDeposit"/>
-      <input type="number" placeholder="원룸 월세" name="roomMonthly"/>
-      <input type="text" placeholder="원룸 위치" name="roomLocations"/>
-      <input type="number" placeholder="원룸 임대 기간(개월)" name="roomRentLength"/>
-      <input type="file" id="roomPhotoFile" name="roomPhotoFile">
-<!--      <input type="text" placeholder="원룸 사진" name="roomPhoto"/>-->
-      <input type="text" placeholder="추가 정보" name="roomDescription"/>
-      <input type="hidden" placeholder="계약 진행 상황" name="roomContract" th:value="0"/>
-      <button type="submit">원룸 등록하기</button>
-    </form>
+
+
+<!-- <body style="background-image: url('background/street.png'); background-size: cover; background-repeat: no-repeat;"> -->
+<body class="sub_page">
+<div class="hero_area">
+  <!-- header section strats -->
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand"  th:href="@{/home(id=${user.id})}">
+          <img th:src="@{/images/logo.png}" height="40px" alt="" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav  ">
+
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/home(id=${user.id})}">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link" style="cursor: pointer;" onclick="goToMyRoom()">내 원룸 보기</p>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer;" th:href = "@{/OneRoom/enroll(login_id=${user.id})}">원룸 등록</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer;" th:href = "@{/OneRoom/search(login_id=${user.id})}">원룸 검색</a>
+            </li>
+          </ul>
+          <div class="user_option">
+            <a th:href="@{/editinfo(id=${user.id})}"  style="cursor: pointer;">
+              <img th:src="@{/images/user.png}" alt="" />
+              <span>
+                        회원정보수정&nbsp;
+                      </span>
+            </a>
+            <a onClick="location.href='/logout'"  style="cursor: pointer;">
+                      <span>
+                        &nbsp;로그아웃
+                      </span>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="custom_menu-btn ">
+            <button>
+                      <span class=" s-1">
+
+                      </span>
+              <span class="s-2">
+
+                      </span>
+              <span class="s-3">
+
+                      </span>
+            </button>
+          </div>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+</div>
+
+
+
+<div class="form-wrapper">
+  <form id="myForm" method="post" enctype="multipart/form-data">
+    <h1 class="mytitle">원룸 등록 페이지</h1>
+    원룸 명<input type="text" placeholder="원룸 명" name="roomName"/>
+    보증금(만원)<input type="number" placeholder="원룸 보증금" name="roomDeposit"/>
+    월세(만원)<input type="number" placeholder="원룸 월세" name="roomMonthly"/>
+    위치<input type="text" placeholder="원룸 위치" name="roomLocations"/>
+    임대 기간(개월)<input type="number" placeholder="원룸 임대 기간(개월)" name="roomRentLength"/>
+    사진 등록<input type="file" id="roomPhotoFile" name="roomPhotoFile">
+    추가 정보<input type="text" placeholder="추가 정보" name="roomDescription"/>
+    <input type="hidden" placeholder="계약 진행 상황" name="roomContract" th:value="0"/>
+    <button type="submit" class="btn-register">원룸 등록하기</button>
+  </form>
+</div>
+
+
+<!-- info section -->
+<section class="info_section layout_padding2">
+  <div class="container">
+    <div class="info_logo">
+      <h2>
+        OneRoomy
+      </h2>
+    </div>
+    <div class="row">
+
+      <div class="col-md-3">
+        <div class="info_contact">
+          <h5>
+            Developer
+          </h5>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/user.png}" width="18px" alt="">
+            </div>
+            <p>
+              김준용
+            </p>
+          </div>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/location-white.png}" width="18px" alt="">
+            </div>
+            <p>
+              Kumoh National Univ.
+            </p>
+          </div>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/telephone-white.png}" width="12px" alt="">
+            </div>
+            <p>
+              010-4474-XXXX
+            </p>
+          </div>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/envelope-white.png}" width="18px" alt="">
+            </div>
+            <p>
+              rockwellvinca@gmail.com
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="info_info">
+          <h5>
+            Informations
+          </h5>
+          <p>
+            2023 WebKIT640<br>개인프로젝트<br><br>대학가 원룸 중계 앱<br>OneRoomy
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="info_insta">
+          <h5>
+            Instagram
+          </h5>
+          <div class="social_box">
+            <a href="https://www.instagram.com/vinca_junyong/">
+              <img th:src="@{/images/instagram-Icon.png}" width="50" height="50" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="info_insta">
+          <h5>
+            Velog
+          </h5>
+          <div class="social_box">
+            <a href="https://velog.io/@rockwellvinca">
+              <img th:src="@{/images/velog.png}" width="50" height="50" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+</section>
+
+<!-- end info_section -->
+
+<!-- footer section -->
+<section class="container-fluid footer_section ">
+  <div class="container">
+    <p>
+      &copy; 2023 All Rights Reserved By
+      <a href="#">OneRoomy</a>
+    </p>
+  </div>
+</section>
+<!-- end  footer section -->
+
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js}"></script>
+
+<script type="text/javascript">
+  $(".owl-carousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    navText: [],
+    autoplay: true,
+    autoplayHoverPause: true,
+    responsive: {
+      0: {
+        items: 1
+      },
+      420: {
+        items: 2
+      },
+      1000: {
+        items: 5
+      }
+    }
+
+  });
+</script>
+<script>
+  var nav = $("#navbarSupportedContent");
+  var btn = $(".custom_menu-btn");
+  btn.click
+  btn.click(function (e) {
+
+    e.preventDefault();
+    nav.toggleClass("lg_nav-toggle");
+    document.querySelector(".custom_menu-btn").classList.toggle("menu_btn-style")
+  });
+</script>
+<script>
+  $('.carousel').on('slid.bs.carousel', function () {
+    $(".indicator-2 li").removeClass("active");
+    indicators = $(".carousel-indicators li.active").data("slide-to");
+    a = $(".indicator-2").find("[data-slide-to='" + indicators + "']").addClass("active");
+    console.log(indicators);
+
+  })
+</script>
+
+
+
+
+
+<!--파일 크기 수정용도 및 기존 소스코드 -->
 <script>
   var login_id = localStorage.getItem('login_userId');
   // form 객체를 찾아서 해당 action 값을 id를 전달하여 재설정
@@ -36,6 +269,14 @@
       event.target.value = ''; // 파일 선택 input 초기화
     }
   });
+
+  function goToMyRoom() {
+    // login_id 값을 가져옵니다.
+    var login_id = localStorage.getItem('login_userId');
+
+    // 새로운 URL에 login_id 값을 파라미터로 추가하여 이동합니다.
+    location.href = '/OneRoom/myRoom?login_id=' + login_id;
+  }
 
 </script>
 

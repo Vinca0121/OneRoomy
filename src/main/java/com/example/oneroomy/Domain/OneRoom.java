@@ -25,18 +25,16 @@ public class OneRoom {
     private String roomDescription;
     private Long roomContract;
 
-
-    /** 외래 키 */
-    @ManyToOne
-    @JoinColumn(name = "provideUser_id") // 외래키 컬럼 명 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provideUser_id")
     private User provideUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rentalUser_id") // 외래키 컬럼 명 설정
     private User rentalUser;
 
-    /** mappedBy를 통해 양방향 관계에서 FK를 가지고 있는 주인은 contract가 됨. */
-    @OneToOne(mappedBy = "oneRoom", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "oneRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private Contract contract;
 
+    // constructors, getters, setters
 }

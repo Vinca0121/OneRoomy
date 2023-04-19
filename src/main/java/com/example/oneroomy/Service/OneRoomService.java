@@ -1,6 +1,7 @@
 package com.example.oneroomy.Service;
 
 
+import com.example.oneroomy.Domain.Contract;
 import com.example.oneroomy.Domain.OneRoom;
 import com.example.oneroomy.Domain.User;
 import com.example.oneroomy.Repository.OneRoomRepository;
@@ -40,5 +41,18 @@ public class OneRoomService {
     public List<OneRoom> findOneRoomsByUser(User user) {
         return oneRoomRepository.findByProvideUserOrRentalUser(user, user);
     }
+
+
+    // 임차인으로 계약된 원룸 검색
+    public List<OneRoom> searchRentalOneRoom(User user){
+        return oneRoomRepository.findByRentalUser(user);
+    }
+
+    // 수정된 원룸 정보 저장 (임차인 삭제)
+    public void saveModifiedContracts(List<OneRoom> rentalOneRoomList)
+    {
+        oneRoomRepository.saveAll(rentalOneRoomList);
+    }
+
 
 }

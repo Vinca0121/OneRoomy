@@ -3,6 +3,12 @@
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/css/editinfo.css}"/>
     <title>회원정보수정 페이지</title>
+    <style>
+        /* disabled 상태의 버튼 스타일 */
+        button:disabled {
+            background-color: gray;
+        }
+    </style>
 </head>
 <body style="background-image: url('/background/street.png');  background-repeat: no-repeat;">
 <!-- <form action="/signup" method="post" > -->
@@ -18,7 +24,7 @@
             <div class="withdrawal">
                 <span style="color:red">예. 회원탈퇴를 진행하겠습니다.<input type="checkbox" id="deleteDataCheckbox"></span>
             </div>
-            <button type="submit">회원 탈퇴</button>
+            <button type="submit" id="deleteButton" disabled>회원 탈퇴</button>
         </form>
     </div>
 
@@ -66,6 +72,20 @@
     signInButton.addEventListener('click', () => {
         container.classList.remove("right-panel-active");
     });
+
+
+    // 회워탈퇴 채크박스
+    const deleteDataCheckbox = document.querySelector('#deleteDataCheckbox');
+    const deleteButton = document.querySelector('#deleteButton');
+
+    deleteDataCheckbox.addEventListener('change', () => {
+        if (deleteDataCheckbox.checked) {
+            deleteButton.disabled = false;
+        } else {
+            deleteButton.disabled = true;
+        }
+    });
 </script>
+
 </body>
 </html>

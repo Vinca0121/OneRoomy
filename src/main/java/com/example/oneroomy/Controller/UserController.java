@@ -2,9 +2,11 @@ package com.example.oneroomy.Controller;
 
 
 import com.example.oneroomy.DTO.UserDTO;
+import com.example.oneroomy.Domain.Contract;
 import com.example.oneroomy.Domain.OneRoom;
 import com.example.oneroomy.Domain.Statistic;
 import com.example.oneroomy.Domain.User;
+import com.example.oneroomy.Service.ContractService;
 import com.example.oneroomy.Service.OneRoomService;
 import com.example.oneroomy.Service.StatisticService;
 import com.example.oneroomy.Service.UserService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -23,11 +26,13 @@ public class UserController {
     // autowired 필요 X Configuration사용
     private UserService userService;
     private OneRoomService oneRoomService;
+    private ContractService contractService;
     private StatisticService statisticService;
 
-    public UserController(UserService userService, OneRoomService oneRoomService, StatisticService statisticService) {
+    public UserController(UserService userService, OneRoomService oneRoomService, ContractService contractService, StatisticService statisticService) {
         this.userService = userService;
         this.oneRoomService = oneRoomService;
+        this.contractService = contractService;
         this.statisticService = statisticService;
     }
 
@@ -48,6 +53,7 @@ public class UserController {
 
         /** 2. 원룸전체찾기 */
         List<OneRoom> roomList = oneRoomService.findAllOneRooms();
+        Collections.reverse(roomList);
         model.addAttribute("roomList",roomList);
 
         /** 3. 맨마지막 Statistic 찾아서 반환 */
@@ -86,6 +92,7 @@ public class UserController {
 
         /** 2. 원룸전체찾기 */
         List<OneRoom> roomList = oneRoomService.findAllOneRooms();
+        Collections.reverse(roomList);
         model.addAttribute("roomList",roomList);
 
         /** 3. 맨마지막 Statistic 찾아서 반환 */
@@ -136,6 +143,7 @@ public class UserController {
 
         /** 2. 원룸전체찾기 */
         List<OneRoom> roomList = oneRoomService.findAllOneRooms();
+        Collections.reverse(roomList);
         model.addAttribute("roomList",roomList);
 
         /** 3. 맨마지막 Statistic 찾아서 반환 */
@@ -149,6 +157,21 @@ public class UserController {
     /** 회원 탈퇴 요청 */
     @GetMapping("/deleteAccount")
     public String deleteAccount(@RequestParam Long id, String description){
+
+        User user = userService.getOneUser(id);
+        // 해당 유저가 임차인으로 들어가 있는 경우, 계약을 취소
+        List<Contract> rentalContractList = contractService.searchRentalContract(user);
+        rentalContractList.forEach(contract -> contract.setRentalUser(null));
+        contractService.saveModifiedContracts(rentalContractList);
+
+        // 해당 유저가 임차인으로 들어가 있는 경우, OneRoom 쪽의 임차인 정보도 제거
+        List<OneRoom> rentalOneRoomList = oneRoomService.searchRentalOneRoom(user);
+        rentalOneRoomList.forEach(oneRoom -> oneRoom.setRentalUser(null));
+        oneRoomService.saveModifiedContracts(rentalOneRoomList);
+
+        // 해당 유저를 삭제
+
+        // 삭제 시, 등록된 OneRoom 및 Contract가 전부 삭제
         userService.deleteUser(id);
         return "redirect:/";
     }

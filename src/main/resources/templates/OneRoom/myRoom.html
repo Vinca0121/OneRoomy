@@ -39,7 +39,7 @@
                             <p class="nav-link" style="cursor: pointer;" onclick="goToMyRoom()">내 원룸 보기</p>
                         </li>
                         <li class="nav-item">
-                            <p class="nav-link" style="cursor: pointer;" onClick="location.href='/OneRoom/enroll'">원룸 등록</p>
+                            <a class="nav-link" style="cursor: pointer;" th:href = "@{/OneRoom/enroll(login_id=${user.id})}">원룸 등록</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" style="cursor: pointer;" th:href = "@{/OneRoom/search(login_id=${user.id})}">원룸 검색</a>

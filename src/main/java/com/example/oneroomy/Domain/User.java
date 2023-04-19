@@ -17,7 +17,8 @@ import java.util.List;
 @NoArgsConstructor // 파라미터가 없는 기본 생성자를 생성
 @AllArgsConstructor // 모든 필드 값을 파라미터로 받는 생성자를 만듦
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String phonenumber;
@@ -25,4 +26,11 @@ public class User {
     private String locations;
     private String university;
 
+    @OneToMany(mappedBy = "provideUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<OneRoom> provideOneRooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "provideUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Contract> provideContracts = new ArrayList<>();
+
+    // constructors, getters, setters
 }
