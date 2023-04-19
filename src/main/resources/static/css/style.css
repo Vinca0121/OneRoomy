@@ -706,7 +706,7 @@ a:focus {
 .brand_section .brand-btn {
   display: inline-block;
   padding: 6px 30px;
-  background-color: #a3ff9d; /* 배경 색을 원하는 색상으로 변경 */
+  background-color: #0c0c0c; /* 배경 색을 원하는 색상으로 변경 */
   color: #f5f4f4;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;

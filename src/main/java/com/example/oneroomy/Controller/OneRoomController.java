@@ -157,13 +157,19 @@ public class OneRoomController {
 
 
     @GetMapping("/search")
-    public String goSearchPage(){
+    public String goSearchPage(@RequestParam("login_id") Long login_id, Model model){
+        System.out.println("로그인 아이디는 ?");
+        System.out.println(login_id);
+        /** 로그인한 유저 정보도 모델에 추가해서 전딜 */
+        User user = userService.getOneUser(login_id);
+        model.addAttribute("user",user);
         return "OneRoom/search";
     }
 
 
     @PostMapping("/search")
-    public String goSearchResult(OneRoomDTO oneRoomDTO, Model model){
+    public String goSearchResult(OneRoomDTO oneRoomDTO, @RequestParam("login_id") Long login_id, Model model){
+
         String roomName = oneRoomDTO.getRoomName();
         String roomLocation = oneRoomDTO.getRoomLocations();
         Long roomMonthly = oneRoomDTO.getRoomMonthly();
@@ -282,12 +288,16 @@ public class OneRoomController {
 
         model.addAttribute("roomList",resultoneRoomList);
 
+        /** 로그인한 유저 정보도 모델에 추가해서 전딜 */
+        User user = userService.getOneUser(login_id);
+        model.addAttribute("user",user);
+
         return "OneRoom/search";
     }
 
 
     @GetMapping("/myRoom")
-    public String goSearchPage(@RequestParam("login_id") Long login_id, Model model)
+    public String goMyRoomPage(@RequestParam("login_id") Long login_id, Model model)
     {
         User current_user = userService.getOneUser(login_id);
 
@@ -295,6 +305,7 @@ public class OneRoomController {
         List<OneRoom> roomList = oneRoomService.findOneRoomsByUser(current_user);
 
         model.addAttribute("roomList",roomList);
+        model.addAttribute("user",current_user);
         return "OneRoom/myRoom";
     }
 }
