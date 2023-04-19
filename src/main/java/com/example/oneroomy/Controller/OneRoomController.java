@@ -116,7 +116,7 @@ public class OneRoomController {
     }
 
     @GetMapping("/information")
-    public String goInfoPage(@RequestParam("id") Long id, Model model){
+    public String goInfoPage(@RequestParam("id") Long id, @RequestParam("login_id") Long login_id,  Model model){
         OneRoom oneRoom = oneRoomService.findOneRoomByID(id);
         model.addAttribute("oneRoom",oneRoom);
 
@@ -127,6 +127,10 @@ public class OneRoomController {
         model.addAttribute("provide_user",provide_user);
         model.addAttribute("rental_user",rental_user);
 
+
+        // 로그인 유저 아이디도 함꼐 넘겨줌
+        User user = userService.getOneUser(login_id);
+        model.addAttribute("user",user);
         return "OneRoom/information";
     }
 

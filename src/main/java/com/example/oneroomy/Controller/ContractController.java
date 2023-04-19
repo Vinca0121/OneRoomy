@@ -58,6 +58,9 @@ public class ContractController {
         model.addAttribute("provide_user",provide_user);
         model.addAttribute("rental_user",rental_user);
 
+        // 로그인 유저 아이디도 함꼐 넘겨줌
+        User user = userService.getOneUser(login_id);
+        model.addAttribute("user",user);
         return "OneRoom/information";
     }
 
@@ -92,6 +95,9 @@ public class ContractController {
             model.addAttribute("provide_user",provide_user);
             model.addAttribute("rental_user",rental_user);
             model.addAttribute("rental_user2",rental_user);
+            // 로그인 유저 아이디도 함꼐 넘겨줌
+            User user = userService.getOneUser(login_id);
+            model.addAttribute("user",user);
             return "OneRoom/information";
         }
         // 권한이 없는 경우
@@ -129,6 +135,10 @@ public class ContractController {
             model.addAttribute("oneRoom", oneRoom);
             model.addAttribute("provide_user", provide_user);
             model.addAttribute("rental_user", rental_user);
+
+            // 로그인 유저 아이디도 함꼐 넘겨줌
+            User user = userService.getOneUser(login_id);
+            model.addAttribute("user",user);
 
             return "OneRoom/information";
         }

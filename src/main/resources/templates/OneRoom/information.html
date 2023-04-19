@@ -1,76 +1,290 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/information.css}"/>
-  <title>원룸 정보 디테일 페이지</title>
+  <title>원룸 상세 페이지</title>
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css}" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link th:href="@{/css/responsive.css}" rel="stylesheet" />
 </head>
-<body style="background-image: url('/background/street.pngz'); background-size: cover; background-repeat: no-repeat;">
-<!-- <form action="/signup" method="post" > -->
-
-<span type="hidden" name="del_oneroom_id" th:value="${oneRoom.roomContract}"></span>
-
-<h1 th:id="contractStatus" style="color: mediumslateblue;">
-  계약 상태:
-</h1>
-<h1>원룸 정보</h1>
-원룸 명 : <span th:text="${oneRoom.roomName}"></span><br>
-보증금 : <span th:text="${oneRoom.roomDeposit}"></span><br>
-월세 : <span th:text="${oneRoom.roomMonthly}"></span><br>
-위치 : <span th:text="${oneRoom.roomLocations}"></span><br>
-임대기간 : <span th:text="${oneRoom.roomRentLength}"></span><br>
-원룸 상세 정보 : <span th:text="${oneRoom.roomDescription}"></span><br>
-원룸 이미지 : <img th:src= "@{${oneRoom.roomPhoto}}"  width="200" height="200"></div>
-
-<h2>계약 진행 현황</h2>
-임대인 : <span th:text="${provide_user != null ? provide_user.username : '정보 없음'}"></span><br>
-임대인 번호 : <span th:text="${provide_user != null ? provide_user.phonenumber : '없음'}"></span><br>
-임차인 : <span th:text="${rental_user != null ? rental_user.username : '미지정'}"></span><br>
-임차인 번호 : <span th:text="${rental_user != null ? rental_user.phonenumber : '미지정'}"></span><br>
-<!--<a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}">-->
-<h2>기능</h2>
-<button type="button" onClick="location.href='/logout'" style="background-color: lightsalmon;">로그아웃</button>
-
-<form action="/OneRoom/delete" method="get">
-  <input type="hidden" name="del_oneroom_id" th:value="${oneRoom.id}"><br>
-  <input id="login_id_input1" type="hidden" name="login_id"><br>
-  <button type="submit" formmethod="GET">원룸 삭제</button>
-</form>
 
 
-<form action="/Contract/startContract" method="get">
-  <input type="hidden" name="oneroom_id" th:value="${oneRoom.id}"><br>
-  <input id="login_id_input2" type="hidden" name="login_id"><br>
-  <button type="submit" formmethod="GET">계약 요청</button>
-</form>
+<body class="sub_page">
+<div class="hero_area">
+  <!-- header section strats -->
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand"  th:href="@{/home(id=${user.id})}">
+          <img th:src="@{/images/logo.png}" height="40px" alt="" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-<form action="/Contract/stopContract" method="get">
-  <input type="hidden" name="oneroom_id" th:value="${oneRoom.id}"><br>
-  <input id="login_id_input3" type="hidden" name="login_id"><br>
-  <button type="submit" formmethod="GET">계약 취소</button>
-</form>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav  ">
+
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/home(id=${user.id})}">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link" style="cursor: pointer;" onclick="goToMyRoom()">내 원룸 보기</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link" style="cursor: pointer;" onClick="location.href='/OneRoom/enroll'">원룸 등록</p>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link" style="cursor: pointer;" onClick="location.href='/OneRoom/search'">원룸 검색</p>
+            </li>
+          </ul>
+          <div class="user_option">
+            <a th:href="@{/editinfo(id=${user.id})}"  style="cursor: pointer;">
+              <img th:src="@{/images/user.png}" alt="" />
+              <span>
+                회원정보수정&nbsp;
+              </span>
+            </a>
+            <a onClick="location.href='/logout'"  style="cursor: pointer;">
+              <span>
+                &nbsp;로그아웃
+              </span>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="custom_menu-btn ">
+            <button>
+              <span class=" s-1">
+
+              </span>
+              <span class="s-2">
+
+              </span>
+              <span class="s-3">
+
+              </span>
+            </button>
+          </div>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+</div>
 
 
-<form action="/Contract/endContract" method="get" id="contractForm">
-  <input type="hidden" name="oneroom_id" th:value="${oneRoom.id}"><br>
-  <input id="login_id_input4" type="hidden" name="login_id"><br>
-  <button type="submit" formmethod="GET" onclick="checkContractStatus()">계약 완료</button>
-</form>
+<!-- about section -->
 
+<section class="about_section layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="detail-box">
+          <div class="heading_container">
+          </div>
+          <h2>원룸 정보</h2>
+          <p>
+          <h4>원룸 명 : <span th:text="${oneRoom.roomName}"></span><br></h4>
+          <h4>보증금 : <span th:text="${oneRoom.roomDeposit}"></span><br><h4>
+            <h4>월세 : <span th:text="${oneRoom.roomMonthly}"></span><br></h4>
+            <h4>위치 : <span th:text="${oneRoom.roomLocations}"></span><br></h4>
+            <h4>임대기간 : <span th:text="${oneRoom.roomRentLength}"></span><br></h4>
+            <h4>원룸 상세 정보 : <span th:text="${oneRoom.roomDescription}"></span><br></h4>
+            </p>
+            <a th:href="@{/Contract/startContract(oneroom_id=${oneRoom.id}, login_id=${user.id})}">계약 요청</a>
+            <a th:href="@{/Contract/stopContract(oneroom_id=${oneRoom.id}, login_id=${user.id})}">계약 취소</a>
+            <a th:href="@{/Contract/endContract(oneroom_id=${oneRoom.id}, login_id=${user.id})}" onclick="checkContractStatus()">계약 완료</a>
+            <a th:href="@{/OneRoom/delete(del_oneroom_id=${oneRoom.id}, login_id=${user.id})}">원룸 삭제</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="img-box">
+          <img th:src= "@{${oneRoom.roomPhoto}}"  width="200" height="200" alt="">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <hr>
+        <h4 th:id="contractStatus" style="color: mediumslateblue;">
+          계약 상태:
+        </h4>
+        <h3>계약자 정보</h3>
+        <h4>임대인 : <span th:text="${provide_user != null ? provide_user.username : '정보 없음'}"></span><br>
+          <h4>임대인 번호 : <span th:text="${provide_user != null ? provide_user.phonenumber : '없음'}"></span><br>
+            <h4>임차인 : <span th:text="${rental_user != null ? rental_user.username : '미지정'}"></span><br>
+              <h4>임차인 번호 : <span th:text="${rental_user != null ? rental_user.phonenumber : '미지정'}"></span><br>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- end about section -->
+
+
+<!-- info section -->
+<section class="info_section layout_padding2">
+  <div class="container">
+    <div class="info_logo">
+      <h2>
+        OneRoomy
+      </h2>
+    </div>
+    <div class="row">
+
+      <div class="col-md-3">
+        <div class="info_contact">
+          <h5>
+            Developer
+          </h5>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/user.png}" width="18px" alt="">
+            </div>
+            <p>
+              김준용
+            </p>
+          </div>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/location-white.png}" width="18px" alt="">
+            </div>
+            <p>
+              Kumoh National Univ.
+            </p>
+          </div>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/telephone-white.png}" width="12px" alt="">
+            </div>
+            <p>
+              010-4474-XXXX
+            </p>
+          </div>
+          <div>
+            <div class="img-box">
+              <img th:src="@{/images/envelope-white.png}" width="18px" alt="">
+            </div>
+            <p>
+              rockwellvinca@gmail.com
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="info_info">
+          <h5>
+            Informations
+          </h5>
+          <p>
+            2023 WebKIT640<br>개인프로젝트<br><br>대학가 원룸 중계 앱<br>OneRoomy
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="info_insta">
+          <h5>
+            Instagram
+          </h5>
+          <div class="social_box">
+            <a href="https://www.instagram.com/vinca_junyong/">
+              <img th:src="@{/images/instagram-Icon.png}" width="50" height="50" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="info_insta">
+          <h5>
+            Velog
+          </h5>
+          <div class="social_box">
+            <a href="https://velog.io/@rockwellvinca">
+              <img th:src="@{/images/velog.png}" width="50" height="50" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- end info_section -->
+
+<!-- footer section -->
+<section class="container-fluid footer_section ">
+  <div class="container">
+    <p>
+      &copy; 2023 All Rights Reserved By
+      <a href="#">OneRoomy</a>
+    </p>
+  </div>
+</section>
+<!-- end  footer section -->
+
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js}"></script>
+
+<script type="text/javascript">
+  $(".owl-carousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    navText: [],
+    autoplay: true,
+    autoplayHoverPause: true,
+    responsive: {
+      0: {
+        items: 1
+      },
+      420: {
+        items: 2
+      },
+      1000: {
+        items: 5
+      }
+    }
+
+  });
+</script>
+<script>
+  var nav = $("#navbarSupportedContent");
+  var btn = $(".custom_menu-btn");
+  btn.click
+  btn.click(function (e) {
+
+    e.preventDefault();
+    nav.toggleClass("lg_nav-toggle");
+    document.querySelector(".custom_menu-btn").classList.toggle("menu_btn-style")
+  });
+</script>
+<script>
+  $('.carousel').on('slid.bs.carousel', function () {
+    $(".indicator-2 li").removeClass("active");
+    indicators = $(".carousel-indicators li.active").data("slide-to");
+    a = $(".indicator-2").find("[data-slide-to='" + indicators + "']").addClass("active");
+    console.log(indicators);
+
+  })
+</script>
+
+<script th:inline="javascript">
+  var login_id = localStorage.getItem('login_userId');
+</script>
 
 <script>
-  var login_id = localStorage.getItem('login_userId');
 
-  var input1 = document.getElementById('login_id_input1');
-  var input2 = document.getElementById('login_id_input2');
-  var input3 = document.getElementById('login_id_input3');
-  var input4 = document.getElementById('login_id_input4');
-
-  input1.value = login_id;
-  input2.value = login_id;
-  input3.value = login_id;
-  input4.value = login_id;
-
-  /* oneRoom.roomContract 값에 따라 계약 상태 텍스트를 표시 */
   var contractStatus = [[${oneRoom.roomContract}]];
 
   if (contractStatus === 0) {
@@ -88,6 +302,14 @@
       return false;
     }
   }
+  function goToMyRoom() {
+    // login_id 값을 가져옵니다.
+    var login_id = localStorage.getItem('login_userId');
+
+    // 새로운 URL에 login_id 값을 파라미터로 추가하여 이동합니다.
+    location.href = '/OneRoom/myRoom?login_id=' + login_id;
+  }
+
 </script>
 
 </body>

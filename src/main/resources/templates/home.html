@@ -428,14 +428,17 @@
 
             <!-- roomList를 반복하여 "box" 클래스를 생성 -->
             <div th:each="room, stat : ${roomList}" class="box" th:if="${stat.index} &lt; 4">
-                <a th:href="'/OneRoom/information?id=' + ${room.id}">
+                <a th:href="'/OneRoom/information?id=' + ${room.id} + '&login_id=' + ${user.id}">
                     <div class="new">
                         <h5>
                             New
                         </h5>
                     </div>
                     <div class="img-box">
-                        <img th:src="${room.roomPhoto}" alt="제품 사진" th:onclick="'location.href=\'' + '/OneRoom/information?id=' + ${room.id} + '\''" style="cursor: pointer;">
+                        <img th:src="${room.roomPhoto}" alt="제품 사진"
+                             th:onclick="'location.href=\'' + '/OneRoom/information?id=' + ${room.id} + '&amp;\login_id=' + ${user.id} + '\''"
+                             style="cursor: pointer;">
+
                     </div>
                     <div class="detail-box">
                         <h6 class="price">
