@@ -93,7 +93,6 @@
           </div>
           <h2>원룸 정보</h2>
           <p>
-          <h4>원룸 명 : <span th:text="${oneRoom.provideUser.id}"></span><br></h4>
           <h4>원룸 명 : <span th:text="${oneRoom.roomName}"></span><br></h4>
           <h4>보증금 : <span th:text="|${oneRoom.roomDeposit}만원|"></span><br><h4>
             <h4>월세 : <span th:text="|${oneRoom.roomMonthly}만원|"></span><br></h4>
@@ -114,9 +113,9 @@
       </div>
       <div class="col-md-6">
         <hr>
-        <h4 th:id="contractStatus" style="color: mediumslateblue;">
+        <h1 th:id="contractStatus" style="font-weight: bold;" >
           계약 상태:
-        </h4>
+        </h1>
         <h3>계약자 정보</h3>
         <h4>임대인 : <span th:text="${provide_user != null ? provide_user.username : '정보 없음'}"></span><br>
           <h4>임대인 번호 : <span th:text="${provide_user != null ? provide_user.phonenumber : '없음'}"></span><br>
@@ -284,14 +283,20 @@
 <script>
 
   var contractStatus = [[${oneRoom.roomContract}]];
+  var contractStatusText = '';
 
   if (contractStatus === 0) {
-    document.getElementById('contractStatus').innerText += '계약 가능';
+    contractStatusText = '계약 가능';
+    document.getElementById('contractStatus').style.color = 'green';
   } else if (contractStatus === 1) {
-    document.getElementById('contractStatus').innerText += '계약 중';
+    contractStatusText = '계약 중';
+    document.getElementById('contractStatus').style.color = 'mediumslateblue';
   } else if (contractStatus === 2) {
-    document.getElementById('contractStatus').innerText += '계약 완료';
+    contractStatusText = '계약 완료';
+    document.getElementById('contractStatus').style.color = 'red';
   }
+
+  document.getElementById('contractStatus').innerText += contractStatusText;
 
   /*계약 완료 방지*/
   function checkContractStatus() {

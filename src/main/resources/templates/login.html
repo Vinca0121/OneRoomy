@@ -5,6 +5,8 @@
     <title>로그인/회원가입 페이지</title>
 </head>
 <body style="background-image: url('/background/street.png');  background-repeat: no-repeat;">
+
+
 <!-- <form action="/signup" method="post" > -->
 <h1 class="welcome">Welcome to OneRoomy!</h1>
 <div class="container" id="container">
@@ -64,6 +66,13 @@
         container.classList.remove("right-panel-active");
     });
 
+</script>
+
+<script>
+        var errorMessage = "[[${error}]]";
+        if(errorMessage) {
+            alert(errorMessage);
+        }
 </script>
 </body>
 </html>

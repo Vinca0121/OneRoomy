@@ -110,7 +110,8 @@ public class UserController {
             return "home";
         }
         else{
-            return "redirect:/";
+            model.addAttribute("error", "휴대전화 번호 또는 비밀번호를 다시 확인해주세요.");
+            return "login";
         }
     }
 
