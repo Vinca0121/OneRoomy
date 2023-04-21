@@ -161,6 +161,7 @@ public class UserController {
         // 해당 유저가 임차인으로 들어가 있는 경우, OneRoom 쪽의 임차인 정보도 제거
         List<OneRoom> rentalOneRoomList = oneRoomService.searchRentalOneRoom(user);
         rentalOneRoomList.forEach(oneRoom -> oneRoom.setRentalUser(null));
+        rentalOneRoomList.forEach(oneRoom -> oneRoom.setRoomContract(0L));
         oneRoomService.saveModifiedContracts(rentalOneRoomList);
 
         // 해당 유저를 삭제
